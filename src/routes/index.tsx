@@ -254,7 +254,13 @@ function Hero() {
   );
 }
 
-function Products() {
+function Products({
+  products,
+  onRemove,
+}: {
+  products: Product[];
+  onRemove: (name: string) => void;
+}) {
   return (
     <section id="shop" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <div className="reveal mb-14 text-center">
@@ -268,7 +274,7 @@ function Products() {
       </div>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {PRODUCTS.map((product, i) => (
+        {products.map((product: Product, i: number) => (
           <article
             key={product.name}
             className="reveal group relative overflow-hidden rounded-3xl border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-gold"
