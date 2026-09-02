@@ -452,20 +452,243 @@ function Footer() {
   );
 }
 
+function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
+  const [form, setForm] = useState({
+    name: "",
+    notes: "",
+    description: "",
+    price: "",
+    tag: "New",
+  });
+  const [image, setImage] = useState<string | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const update =
+    (key: keyof typeof form) =>
+    (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) =>
+      setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const onImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => setImage(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.price.trim()) {
+      toast.error("Please add at least a name and price.");
+      return;
+    }
+    if (!image) {
+      toast.error("Please upload a photo of the perfume.");
+      return;
+    }
+    onAdd({
+      name: form.name.trim(),
+      notes: form.notes.trim() || "Signature Blend",
+      description: form.description.trim() || "A new Flosh Cents creation.",
+      price: form.price.trim(),
+      image,
+      tag: form.tag.trim() || "New",
+      custom: true,
+    });
+    setForm({ name: "", notes: "", description: "", price: "", tag: "New" });
+    setImage(null);
+    if (fileRef.current) fileRef.current.value = "";
+    toast.success(`${form.name} added to the collection`, {
+      description: "Saved in this browser.",
+    });
+  };
+
+  const inputCls =
+    "w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none";
+
+  return (
+    <section id="add-perfume" className="bg-forest py-24">
+      <div className="mx-auto max-w-3xl px-6 lg:px-10">
+        <div className="reveal mb-12 text-center">
+          <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
+            Grow the Collection
+          </span>
+          <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
+            Add a <span className="gold-text">New Perfume</span>
+          </h2>
+          <div className="gold-line mx-auto mt-6 h-px w-40" />
+        </div>
+
+        <form
+          onSubmit={submit}
+          className="reveal glass-panel space-y-5 rounded-3xl p-8"
+        >
+          <div className="grid gap-5 sm:grid-cols-2">
+            <input
+              className={inputCls}
+              placeholder="Perfume name *"
+              value={form.name}
+              onChange={update("name")}
+            />
+            <input
+              className={inputCls}
+              placeholder="Price (e.g. UGX 150,000) *"
+              value={form.price}
+              onChange={update("price")}
+            />
+            <input
+              className={inputCls}
+              placeholder="Notes (e.g. Rose · Amber · Musk)"
+              value={form.notes}
+              onChange={update("notes")}
+            />
+            <input
+              className={inputCls}
+              placeholder="Tag (e.g. New, Best Seller)"
+              value={form.tag}
+              onChange={update("tag")}
+            />
+          </div>
+          <textarea
+            className={`${inputCls} min-h-24 resize-y`}
+            placeholder="Short description"
+            value={form.description}
+            onChange={update("description")}
+          />
+
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-6 py-3 text-xs font-bold tracking-widest text-primary uppercase transition-colors hover:bg-primary/10"
+            >
+              <ImagePlus size={16} />
+              {image ? "Change Photo" : "Upload Photo *"}
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={onImage}
+            />
+            {image && (
+              <img
+                src={image}
+                alt="New perfume preview"
+                className="h-16 w-16 rounded-xl border border-primary/40 object-cover"
+              />
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase shadow-gold transition-transform hover:scale-105"
+          >
+            <Plus size={16} />
+            Add to Collection
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  return (
+    <section id="contact" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+      <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-card p-10 text-center sm:p-16">
+        <div className="animate-glow-pulse absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
+        <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
+          Get in Touch
+        </span>
+        <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
+          Order on <span className="gold-text">WhatsApp</span>
+        </h2>
+        <p className="mx-auto mt-5 max-w-md leading-relaxed text-muted-foreground">
+          Message Flosh directly to order, ask about a scent, or book a
+          fragrance consultation in Kampala.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href={whatsappLink("Hello Flosh Cents! I'd like to order a perfume.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase shadow-gold transition-transform hover:scale-105"
+          >
+            <MessageCircle size={18} />
+            WhatsApp Us
+          </a>
+          <a
+            href={`tel:+${WHATSAPP_NUMBER}`}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-8 py-4 text-sm font-semibold tracking-wide text-primary uppercase transition-colors hover:bg-primary/10"
+          >
+            <Phone size={16} />
+            {WHATSAPP_DISPLAY}
+          </a>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center gap-3 text-sm text-muted-foreground">
+          <MapPin size={16} className="text-primary" />
+          Kampala, Uganda
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const STORAGE_KEY = "flosh-cents-custom-products";
+
+function loadCustomProducts(): Product[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as Product[]) : [];
+  } catch {
+    return [];
+  }
+}
+
 function Index() {
   useScrollReveal();
-  const mounted = useRef(false);
+  const [customProducts, setCustomProducts] = useState<Product[]>([]);
+
   useEffect(() => {
-    mounted.current = true;
+    setCustomProducts(loadCustomProducts());
   }, []);
+
+  const addProduct = (p: Product) => {
+    setCustomProducts((prev) => {
+      const next = [...prev, p];
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        toast.error("Image too large to save in this browser.");
+      }
+      return next;
+    });
+  };
+
+  const removeProduct = (name: string) => {
+    setCustomProducts((prev) => {
+      const next = prev.filter((p) => p.name !== name);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    });
+    toast.success("Perfume removed from the collection.");
+  };
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header />
       <Hero />
-      <Products />
+      <Products products={[...DEFAULT_PRODUCTS, ...customProducts]} onRemove={removeProduct} />
+      <AddPerfume onAdd={addProduct} />
       <About />
       <Features />
+      <Contact />
       <Footer />
     </main>
   );
