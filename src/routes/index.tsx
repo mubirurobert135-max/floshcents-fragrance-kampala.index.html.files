@@ -292,6 +292,15 @@ function Products({
               <span className="absolute top-4 left-4 rounded-full bg-background/70 px-3 py-1 text-[11px] font-bold tracking-widest text-primary uppercase backdrop-blur">
                 {product.tag}
               </span>
+              {product.custom && (
+                <button
+                  onClick={() => onRemove(product.name)}
+                  aria-label={`Remove ${product.name}`}
+                  className="absolute top-4 right-4 rounded-full bg-background/70 p-2 text-destructive backdrop-blur transition-transform hover:scale-110"
+                >
+                  <Trash2 size={14} />
+                </button>
+              )}
             </div>
 
             <div className="p-6">
