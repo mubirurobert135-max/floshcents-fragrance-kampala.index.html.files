@@ -10,8 +10,18 @@ import {
   MapPin,
   Star,
   ArrowRight,
+  MessageCircle,
+  Phone,
+  Plus,
+  ImagePlus,
+  Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
+
+const WHATSAPP_NUMBER = "256753325780";
+const WHATSAPP_DISPLAY = "0753 325 780";
+const whatsappLink = (message: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
 import heroPerfume from "@/assets/hero-perfume.jpg";
 import royalBloom from "@/assets/royal-bloom.jpg";
