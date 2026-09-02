@@ -51,7 +51,17 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const PRODUCTS = [
+type Product = {
+  name: string;
+  notes: string;
+  description: string;
+  price: string;
+  image: string;
+  tag: string;
+  custom?: boolean;
+};
+
+const DEFAULT_PRODUCTS: Product[] = [
   {
     name: "Royal Bloom",
     notes: "Rose · Peony · Warm Amber",
