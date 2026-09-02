@@ -435,7 +435,7 @@ function Features() {
 
 function Footer() {
   return (
-    <footer id="contact" className="border-t border-border bg-background py-14">
+    <footer className="border-t border-border bg-background py-14">
       <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
         <p className="font-display text-3xl font-semibold">
           <span className="gold-text">Flosh</span> Cents
