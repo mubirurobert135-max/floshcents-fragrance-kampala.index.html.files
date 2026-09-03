@@ -28,6 +28,8 @@ import royalBloom from "@/assets/royal-bloom.jpg";
 import midnightEssence from "@/assets/midnight-essence.jpg";
 import natureSpirit from "@/assets/nature-spirit.jpg";
 import aboutFlosh from "@/assets/about-flosh.jpg";
+import floshPortrait1 from "@/assets/flosh-portrait-1.jpg.asset.json";
+import floshPortrait2 from "@/assets/flosh-portrait-2.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -51,22 +53,40 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const CATEGORIES = [
+  "Oil Perfumes",
+  "Spray Perfumes",
+  "Designer Inspired",
+  "Body Mists",
+  "Gift Sets",
+] as const;
+
+type Category = (typeof CATEGORIES)[number];
+
 type Product = {
   name: string;
   notes: string;
   description: string;
-  price: string;
+  price: number;
+  size: string;
+  category: Category;
+  stock: number;
   image: string;
   tag: string;
   custom?: boolean;
 };
+
+const ugx = (n: number) => `UGX ${n.toLocaleString("en-UG")}`;
 
 const DEFAULT_PRODUCTS: Product[] = [
   {
     name: "Royal Bloom",
     notes: "Rose · Peony · Warm Amber",
     description: "A luxury floral fragrance that opens soft and lingers like silk.",
-    price: "UGX 150,000",
+    price: 150000,
+    size: "100ml",
+    category: "Spray Perfumes",
+    stock: 12,
     image: royalBloom,
     tag: "Best Seller",
   },
@@ -74,7 +94,10 @@ const DEFAULT_PRODUCTS: Product[] = [
     name: "Midnight Essence",
     notes: "Oud · Black Pepper · Vetiver",
     description: "A deep masculine scent, bold and unforgettable after dark.",
-    price: "UGX 180,000",
+    price: 180000,
+    size: "100ml",
+    category: "Designer Inspired",
+    stock: 8,
     image: midnightEssence,
     tag: "Signature",
   },
@@ -82,9 +105,78 @@ const DEFAULT_PRODUCTS: Product[] = [
     name: "Nature Spirit",
     notes: "Citrus · Green Leaves · Musk",
     description: "A fresh natural fragrance inspired by Uganda's lush landscapes.",
-    price: "UGX 120,000",
+    price: 120000,
+    size: "75ml",
+    category: "Spray Perfumes",
+    stock: 15,
     image: natureSpirit,
     tag: "New",
+  },
+  {
+    name: "One PM",
+    notes: "Bergamot · Lavender · Cedar",
+    description: "The crisp daytime classic — clean, sharp and office ready.",
+    price: 200000,
+    size: "100ml",
+    category: "Designer Inspired",
+    stock: 6,
+    image: midnightEssence,
+    tag: "Premium",
+  },
+  {
+    name: "Golden Oud Oil",
+    notes: "Pure Oud · Saffron · Sandalwood",
+    description: "Concentrated attar oil — a single dab lasts the entire day.",
+    price: 35000,
+    size: "6ml roll-on",
+    category: "Oil Perfumes",
+    stock: 30,
+    image: royalBloom,
+    tag: "Oil",
+  },
+  {
+    name: "Vanilla Silk Oil",
+    notes: "Vanilla · Tonka · Soft Musk",
+    description: "Warm sweet body oil perfume, gentle on the skin and long lasting.",
+    price: 15000,
+    size: "3ml roll-on",
+    category: "Oil Perfumes",
+    stock: 40,
+    image: natureSpirit,
+    tag: "Affordable",
+  },
+  {
+    name: "Pocket Attar Mini",
+    notes: "Rose Attar · Amber",
+    description: "Handbag-size oil perfume — the perfect first Flosh Cents scent.",
+    price: 5000,
+    size: "1.5ml",
+    category: "Oil Perfumes",
+    stock: 60,
+    image: royalBloom,
+    tag: "From UGX 5,000",
+  },
+  {
+    name: "Garden Fresh Mist",
+    notes: "Green Apple · Jasmine · Cotton",
+    description: "Light refreshing body mist for everyday freshness.",
+    price: 25000,
+    size: "150ml",
+    category: "Body Mists",
+    stock: 25,
+    image: natureSpirit,
+    tag: "Everyday",
+  },
+  {
+    name: "Flosh Duo Gift Set",
+    notes: "Spray 50ml + Oil 6ml",
+    description: "A wrapped gift set pairing a signature spray with a matching oil.",
+    price: 95000,
+    size: "Set",
+    category: "Gift Sets",
+    stock: 10,
+    image: midnightEssence,
+    tag: "Gift",
   },
 ];
 
@@ -261,20 +353,57 @@ function Products({
   products: Product[];
   onRemove: (name: string) => void;
 }) {
+  const [filter, setFilter] = useState<"All" | Category>("All");
+  const visible =
+    filter === "All" ? products : products.filter((p) => p.category === filter);
+
   return (
-    <section id="shop" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-      <div className="reveal mb-14 text-center">
+    <section
+      id="shop"
+      className="relative overflow-hidden px-6 py-24 lg:px-10"
+    >
+      <img
+        src={floshPortrait2.url}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-10"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/92 to-background" />
+
+      <div className="relative mx-auto max-w-7xl">
+      <div className="reveal mb-10 text-center">
         <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-          The Collection
+          The Store
         </span>
         <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-          Customer <span className="gold-text">Favourites</span>
+          Perfume <span className="gold-text">Store</span>
         </h2>
+        <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
+          Oil perfumes, sprays, designer-inspired scents and gift sets — from
+          UGX 5,000 to UGX 200,000. Live stock updated by Flosh.
+        </p>
         <div className="gold-line mx-auto mt-6 h-px w-40" />
       </div>
 
+      <div className="reveal mb-12 flex flex-wrap justify-center gap-3">
+        {(["All", ...CATEGORIES] as const).map((c) => (
+          <button
+            key={c}
+            onClick={() => setFilter(c)}
+            className={`rounded-full border px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors ${
+              filter === c
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-primary/30 text-primary hover:bg-primary/10"
+            }`}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
+
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((product: Product, i: number) => (
+        {visible.map((product: Product, i: number) => (
           <article
             key={product.name}
             className="reveal group relative overflow-hidden rounded-3xl border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-gold"
@@ -304,7 +433,12 @@ function Products({
             </div>
 
             <div className="p-6">
-              <h3 className="font-display text-2xl font-medium">{product.name}</h3>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-display text-2xl font-medium">{product.name}</h3>
+                <span className="mt-1 shrink-0 rounded-full border border-primary/30 px-2 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
+                  {product.size}
+                </span>
+              </div>
               <p className="mt-1 text-xs tracking-widest text-primary uppercase">
                 {product.notes}
               </p>
@@ -312,25 +446,40 @@ function Products({
                 {product.description}
               </p>
 
+              <p className="mt-3 text-xs tracking-widest text-muted-foreground uppercase">
+                {product.category} ·{" "}
+                {product.stock > 0 ? (
+                  <span className="text-primary">{product.stock} in stock</span>
+                ) : (
+                  <span className="text-destructive">Sold out</span>
+                )}
+              </p>
+
               <div className="mt-5 flex items-center justify-between">
                 <span className="font-display text-xl font-semibold text-primary">
-                  {product.price}
+                  {ugx(product.price)}
                 </span>
-                <button
+                <a
+                  href={whatsappLink(
+                    `Hello Flosh Cents! I'd like to order ${product.name} (${product.size}) — ${ugx(product.price)}.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() =>
-                    toast.success(`${product.name} added to your bag`, {
-                      description: "Checkout & delivery options coming soon.",
+                    toast.success(`Ordering ${product.name} on WhatsApp`, {
+                      description: "Flosh will confirm delivery in Kampala.",
                     })
                   }
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-105"
                 >
                   <ShoppingBag size={14} />
-                  Add to Bag
-                </button>
+                  Order
+                </a>
               </div>
             </div>
           </article>
         ))}
+      </div>
       </div>
     </section>
   );
@@ -341,17 +490,25 @@ function About() {
     <section id="about" className="relative overflow-hidden bg-forest py-24">
       <div className="animate-glow-pulse absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-10">
-        <div className="reveal relative">
+        <div className="reveal relative pb-10">
           <div className="absolute -inset-4 rounded-3xl border border-primary/25" />
           <img
-            src={aboutFlosh}
-            alt="Flosh, founder of Flosh Cents, in her Kampala perfume atelier"
-            width={900}
-            height={1100}
+            src={floshPortrait1.url}
+            alt="Flosh, founder of Flosh Cents, smiling among hanging plants in Kampala"
+            width={960}
+            height={1280}
             loading="lazy"
             className="relative aspect-[9/11] w-full rounded-3xl object-cover"
           />
-          <div className="glass-panel absolute -bottom-6 left-6 rounded-2xl px-6 py-4">
+          <img
+            src={floshPortrait2.url}
+            alt="Flosh standing outside a plant-filled Kampala garden home"
+            width={480}
+            height={640}
+            loading="lazy"
+            className="absolute -right-2 -bottom-2 hidden w-40 rounded-2xl border-4 border-forest object-cover shadow-gold sm:block lg:w-48"
+          />
+          <div className="glass-panel absolute -bottom-4 left-6 rounded-2xl px-6 py-4">
             <p className="font-display text-lg text-primary">Flosh</p>
             <p className="text-xs tracking-widest text-muted-foreground uppercase">
               Founder & Perfumer
@@ -458,6 +615,9 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
     notes: "",
     description: "",
     price: "",
+    size: "",
+    stock: "",
+    category: CATEGORIES[0] as Category,
     tag: "New",
   });
   const [image, setImage] = useState<string | null>(null);
@@ -466,7 +626,9 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
   const update =
     (key: keyof typeof form) =>
     (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
     ) =>
       setForm((f) => ({ ...f, [key]: e.target.value }));
 
@@ -488,16 +650,33 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
       toast.error("Please upload a photo of the perfume.");
       return;
     }
+    const price = Number(form.price.replace(/[^\d]/g, ""));
+    if (!price) {
+      toast.error("Enter the price in numbers, e.g. 25000.");
+      return;
+    }
     onAdd({
       name: form.name.trim(),
       notes: form.notes.trim() || "Signature Blend",
       description: form.description.trim() || "A new Flosh Cents creation.",
-      price: form.price.trim(),
+      price,
+      size: form.size.trim() || "100ml",
+      category: form.category,
+      stock: Number(form.stock.replace(/[^\d]/g, "")) || 1,
       image,
       tag: form.tag.trim() || "New",
       custom: true,
     });
-    setForm({ name: "", notes: "", description: "", price: "", tag: "New" });
+    setForm({
+      name: "",
+      notes: "",
+      description: "",
+      price: "",
+      size: "",
+      stock: "",
+      category: CATEGORIES[0] as Category,
+      tag: "New",
+    });
     setImage(null);
     if (fileRef.current) fileRef.current.value = "";
     toast.success(`${form.name} added to the collection`, {
@@ -509,17 +688,30 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
     "w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none";
 
   return (
-    <section id="add-perfume" className="bg-forest py-24">
-      <div className="mx-auto max-w-3xl px-6 lg:px-10">
+    <section id="add-perfume" className="relative overflow-hidden bg-forest py-24">
+      <img
+        src={floshPortrait1.url}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-10"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-forest via-forest/90 to-forest" />
+      <div className="relative mx-auto max-w-3xl px-6 lg:px-10">
         <div className="reveal mb-12 text-center">
           <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-            Grow the Collection
+            Stock Manager
           </span>
           <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-            Add a <span className="gold-text">New Perfume</span>
+            Add Stock to the <span className="gold-text">Store</span>
           </h2>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
+            Flosh adds new perfumes here — they appear instantly in the store
+            above for customers to see and order.
+          </p>
           <div className="gold-line mx-auto mt-6 h-px w-40" />
         </div>
+
 
         <form
           onSubmit={submit}
@@ -534,7 +726,8 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
             />
             <input
               className={inputCls}
-              placeholder="Price (e.g. UGX 150,000) *"
+              inputMode="numeric"
+              placeholder="Price in UGX (5000 – 200000) *"
               value={form.price}
               onChange={update("price")}
             />
@@ -543,6 +736,30 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
               placeholder="Notes (e.g. Rose · Amber · Musk)"
               value={form.notes}
               onChange={update("notes")}
+            />
+            <select
+              className={inputCls}
+              value={form.category}
+              onChange={update("category")}
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <input
+              className={inputCls}
+              placeholder="Size (e.g. 6ml roll-on, 100ml)"
+              value={form.size}
+              onChange={update("size")}
+            />
+            <input
+              className={inputCls}
+              inputMode="numeric"
+              placeholder="Quantity in stock"
+              value={form.stock}
+              onChange={update("stock")}
             />
             <input
               className={inputCls}
@@ -600,7 +817,16 @@ function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-card p-10 text-center sm:p-16">
+        <img
+          src={aboutFlosh}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-15"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-card/90 via-card/85 to-card" />
         <div className="animate-glow-pulse absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
+        <div className="relative">
         <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
           Get in Touch
         </span>
