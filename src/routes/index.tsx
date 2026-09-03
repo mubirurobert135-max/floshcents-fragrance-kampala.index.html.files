@@ -403,7 +403,7 @@ function Products({
       </div>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map((product: Product, i: number) => (
+        {visible.map((product: Product, i: number) => (
           <article
             key={product.name}
             className="reveal group relative overflow-hidden rounded-3xl border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-gold"
