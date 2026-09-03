@@ -680,17 +680,30 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
     "w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none";
 
   return (
-    <section id="add-perfume" className="bg-forest py-24">
-      <div className="mx-auto max-w-3xl px-6 lg:px-10">
+    <section id="add-perfume" className="relative overflow-hidden bg-forest py-24">
+      <img
+        src={floshPortrait1.url}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-10"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-forest via-forest/90 to-forest" />
+      <div className="relative mx-auto max-w-3xl px-6 lg:px-10">
         <div className="reveal mb-12 text-center">
           <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-            Grow the Collection
+            Stock Manager
           </span>
           <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-            Add a <span className="gold-text">New Perfume</span>
+            Add Stock to the <span className="gold-text">Store</span>
           </h2>
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
+            Flosh adds new perfumes here — they appear instantly in the store
+            above for customers to see and order.
+          </p>
           <div className="gold-line mx-auto mt-6 h-px w-40" />
         </div>
+
 
         <form
           onSubmit={submit}
