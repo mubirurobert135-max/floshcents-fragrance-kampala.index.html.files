@@ -53,22 +53,40 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const CATEGORIES = [
+  "Oil Perfumes",
+  "Spray Perfumes",
+  "Designer Inspired",
+  "Body Mists",
+  "Gift Sets",
+] as const;
+
+type Category = (typeof CATEGORIES)[number];
+
 type Product = {
   name: string;
   notes: string;
   description: string;
-  price: string;
+  price: number;
+  size: string;
+  category: Category;
+  stock: number;
   image: string;
   tag: string;
   custom?: boolean;
 };
+
+const ugx = (n: number) => `UGX ${n.toLocaleString("en-UG")}`;
 
 const DEFAULT_PRODUCTS: Product[] = [
   {
     name: "Royal Bloom",
     notes: "Rose · Peony · Warm Amber",
     description: "A luxury floral fragrance that opens soft and lingers like silk.",
-    price: "UGX 150,000",
+    price: 150000,
+    size: "100ml",
+    category: "Spray Perfumes",
+    stock: 12,
     image: royalBloom,
     tag: "Best Seller",
   },
@@ -76,7 +94,10 @@ const DEFAULT_PRODUCTS: Product[] = [
     name: "Midnight Essence",
     notes: "Oud · Black Pepper · Vetiver",
     description: "A deep masculine scent, bold and unforgettable after dark.",
-    price: "UGX 180,000",
+    price: 180000,
+    size: "100ml",
+    category: "Designer Inspired",
+    stock: 8,
     image: midnightEssence,
     tag: "Signature",
   },
@@ -84,9 +105,78 @@ const DEFAULT_PRODUCTS: Product[] = [
     name: "Nature Spirit",
     notes: "Citrus · Green Leaves · Musk",
     description: "A fresh natural fragrance inspired by Uganda's lush landscapes.",
-    price: "UGX 120,000",
+    price: 120000,
+    size: "75ml",
+    category: "Spray Perfumes",
+    stock: 15,
     image: natureSpirit,
     tag: "New",
+  },
+  {
+    name: "One PM",
+    notes: "Bergamot · Lavender · Cedar",
+    description: "The crisp daytime classic — clean, sharp and office ready.",
+    price: 200000,
+    size: "100ml",
+    category: "Designer Inspired",
+    stock: 6,
+    image: midnightEssence,
+    tag: "Premium",
+  },
+  {
+    name: "Golden Oud Oil",
+    notes: "Pure Oud · Saffron · Sandalwood",
+    description: "Concentrated attar oil — a single dab lasts the entire day.",
+    price: 35000,
+    size: "6ml roll-on",
+    category: "Oil Perfumes",
+    stock: 30,
+    image: royalBloom,
+    tag: "Oil",
+  },
+  {
+    name: "Vanilla Silk Oil",
+    notes: "Vanilla · Tonka · Soft Musk",
+    description: "Warm sweet body oil perfume, gentle on the skin and long lasting.",
+    price: 15000,
+    size: "3ml roll-on",
+    category: "Oil Perfumes",
+    stock: 40,
+    image: natureSpirit,
+    tag: "Affordable",
+  },
+  {
+    name: "Pocket Attar Mini",
+    notes: "Rose Attar · Amber",
+    description: "Handbag-size oil perfume — the perfect first Flosh Cents scent.",
+    price: 5000,
+    size: "1.5ml",
+    category: "Oil Perfumes",
+    stock: 60,
+    image: royalBloom,
+    tag: "From UGX 5,000",
+  },
+  {
+    name: "Garden Fresh Mist",
+    notes: "Green Apple · Jasmine · Cotton",
+    description: "Light refreshing body mist for everyday freshness.",
+    price: 25000,
+    size: "150ml",
+    category: "Body Mists",
+    stock: 25,
+    image: natureSpirit,
+    tag: "Everyday",
+  },
+  {
+    name: "Flosh Duo Gift Set",
+    notes: "Spray 50ml + Oil 6ml",
+    description: "A wrapped gift set pairing a signature spray with a matching oil.",
+    price: 95000,
+    size: "Set",
+    category: "Gift Sets",
+    stock: 10,
+    image: midnightEssence,
+    tag: "Gift",
   },
 ];
 
