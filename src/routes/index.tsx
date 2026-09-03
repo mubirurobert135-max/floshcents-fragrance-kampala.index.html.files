@@ -28,6 +28,8 @@ import royalBloom from "@/assets/royal-bloom.jpg";
 import midnightEssence from "@/assets/midnight-essence.jpg";
 import natureSpirit from "@/assets/nature-spirit.jpg";
 import aboutFlosh from "@/assets/about-flosh.jpg";
+import floshPortrait1 from "@/assets/flosh-portrait-1.jpg.asset.json";
+import floshPortrait2 from "@/assets/flosh-portrait-2.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
