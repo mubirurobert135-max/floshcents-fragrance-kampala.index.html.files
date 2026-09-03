@@ -642,16 +642,33 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
       toast.error("Please upload a photo of the perfume.");
       return;
     }
+    const price = Number(form.price.replace(/[^\d]/g, ""));
+    if (!price) {
+      toast.error("Enter the price in numbers, e.g. 25000.");
+      return;
+    }
     onAdd({
       name: form.name.trim(),
       notes: form.notes.trim() || "Signature Blend",
       description: form.description.trim() || "A new Flosh Cents creation.",
-      price: form.price.trim(),
+      price,
+      size: form.size.trim() || "100ml",
+      category: form.category,
+      stock: Number(form.stock.replace(/[^\d]/g, "")) || 1,
       image,
       tag: form.tag.trim() || "New",
       custom: true,
     });
-    setForm({ name: "", notes: "", description: "", price: "", tag: "New" });
+    setForm({
+      name: "",
+      notes: "",
+      description: "",
+      price: "",
+      size: "",
+      stock: "",
+      category: CATEGORIES[0] as Category,
+      tag: "New",
+    });
     setImage(null);
     if (fileRef.current) fileRef.current.value = "";
     toast.success(`${form.name} added to the collection`, {
