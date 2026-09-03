@@ -490,17 +490,25 @@ function About() {
     <section id="about" className="relative overflow-hidden bg-forest py-24">
       <div className="animate-glow-pulse absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
       <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-10">
-        <div className="reveal relative">
+        <div className="reveal relative pb-10">
           <div className="absolute -inset-4 rounded-3xl border border-primary/25" />
           <img
-            src={aboutFlosh}
-            alt="Flosh, founder of Flosh Cents, in her Kampala perfume atelier"
-            width={900}
-            height={1100}
+            src={floshPortrait1.url}
+            alt="Flosh, founder of Flosh Cents, smiling among hanging plants in Kampala"
+            width={960}
+            height={1280}
             loading="lazy"
             className="relative aspect-[9/11] w-full rounded-3xl object-cover"
           />
-          <div className="glass-panel absolute -bottom-6 left-6 rounded-2xl px-6 py-4">
+          <img
+            src={floshPortrait2.url}
+            alt="Flosh standing outside a plant-filled Kampala garden home"
+            width={480}
+            height={640}
+            loading="lazy"
+            className="absolute -right-2 -bottom-2 hidden w-40 rounded-2xl border-4 border-forest object-cover shadow-gold sm:block lg:w-48"
+          />
+          <div className="glass-panel absolute -bottom-4 left-6 rounded-2xl px-6 py-4">
             <p className="font-display text-lg text-primary">Flosh</p>
             <p className="text-xs tracking-widest text-muted-foreground uppercase">
               Founder & Perfumer
