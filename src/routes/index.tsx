@@ -607,6 +607,9 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
     notes: "",
     description: "",
     price: "",
+    size: "",
+    stock: "",
+    category: CATEGORIES[0] as Category,
     tag: "New",
   });
   const [image, setImage] = useState<string | null>(null);
@@ -615,7 +618,9 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
   const update =
     (key: keyof typeof form) =>
     (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
     ) =>
       setForm((f) => ({ ...f, [key]: e.target.value }));
 
