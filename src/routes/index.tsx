@@ -718,7 +718,8 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
             />
             <input
               className={inputCls}
-              placeholder="Price (e.g. UGX 150,000) *"
+              inputMode="numeric"
+              placeholder="Price in UGX (5000 – 200000) *"
               value={form.price}
               onChange={update("price")}
             />
@@ -727,6 +728,30 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
               placeholder="Notes (e.g. Rose · Amber · Musk)"
               value={form.notes}
               onChange={update("notes")}
+            />
+            <select
+              className={inputCls}
+              value={form.category}
+              onChange={update("category")}
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <input
+              className={inputCls}
+              placeholder="Size (e.g. 6ml roll-on, 100ml)"
+              value={form.size}
+              onChange={update("size")}
+            />
+            <input
+              className={inputCls}
+              inputMode="numeric"
+              placeholder="Quantity in stock"
+              value={form.stock}
+              onChange={update("stock")}
             />
             <input
               className={inputCls}
