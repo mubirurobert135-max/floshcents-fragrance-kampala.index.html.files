@@ -817,7 +817,16 @@ function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-card p-10 text-center sm:p-16">
+        <img
+          src={aboutFlosh}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-15"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-card/90 via-card/85 to-card" />
         <div className="animate-glow-pulse absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
+        <div className="relative">
         <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
           Get in Touch
         </span>
