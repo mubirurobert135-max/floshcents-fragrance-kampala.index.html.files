@@ -433,7 +433,12 @@ function Products({
             </div>
 
             <div className="p-6">
-              <h3 className="font-display text-2xl font-medium">{product.name}</h3>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="font-display text-2xl font-medium">{product.name}</h3>
+                <span className="mt-1 shrink-0 rounded-full border border-primary/30 px-2 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
+                  {product.size}
+                </span>
+              </div>
               <p className="mt-1 text-xs tracking-widest text-primary uppercase">
                 {product.notes}
               </p>
@@ -441,25 +446,40 @@ function Products({
                 {product.description}
               </p>
 
+              <p className="mt-3 text-xs tracking-widest text-muted-foreground uppercase">
+                {product.category} ·{" "}
+                {product.stock > 0 ? (
+                  <span className="text-primary">{product.stock} in stock</span>
+                ) : (
+                  <span className="text-destructive">Sold out</span>
+                )}
+              </p>
+
               <div className="mt-5 flex items-center justify-between">
                 <span className="font-display text-xl font-semibold text-primary">
-                  {product.price}
+                  {ugx(product.price)}
                 </span>
-                <button
+                <a
+                  href={whatsappLink(
+                    `Hello Flosh Cents! I'd like to order ${product.name} (${product.size}) — ${ugx(product.price)}.`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() =>
-                    toast.success(`${product.name} added to your bag`, {
-                      description: "Checkout & delivery options coming soon.",
+                    toast.success(`Ordering ${product.name} on WhatsApp`, {
+                      description: "Flosh will confirm delivery in Kampala.",
                     })
                   }
                   className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-105"
                 >
                   <ShoppingBag size={14} />
-                  Add to Bag
-                </button>
+                  Order
+                </a>
               </div>
             </div>
           </article>
         ))}
+      </div>
       </div>
     </section>
   );
