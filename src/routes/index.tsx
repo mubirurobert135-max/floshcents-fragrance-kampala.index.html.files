@@ -353,16 +353,53 @@ function Products({
   products: Product[];
   onRemove: (name: string) => void;
 }) {
+  const [filter, setFilter] = useState<"All" | Category>("All");
+  const visible =
+    filter === "All" ? products : products.filter((p) => p.category === filter);
+
   return (
-    <section id="shop" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
-      <div className="reveal mb-14 text-center">
+    <section
+      id="shop"
+      className="relative overflow-hidden px-6 py-24 lg:px-10"
+    >
+      <img
+        src={floshPortrait2.url}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-10"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/92 to-background" />
+
+      <div className="relative mx-auto max-w-7xl">
+      <div className="reveal mb-10 text-center">
         <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-          The Collection
+          The Store
         </span>
         <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-          Customer <span className="gold-text">Favourites</span>
+          Perfume <span className="gold-text">Store</span>
         </h2>
+        <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
+          Oil perfumes, sprays, designer-inspired scents and gift sets — from
+          UGX 5,000 to UGX 200,000. Live stock updated by Flosh.
+        </p>
         <div className="gold-line mx-auto mt-6 h-px w-40" />
+      </div>
+
+      <div className="reveal mb-12 flex flex-wrap justify-center gap-3">
+        {(["All", ...CATEGORIES] as const).map((c) => (
+          <button
+            key={c}
+            onClick={() => setFilter(c)}
+            className={`rounded-full border px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors ${
+              filter === c
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-primary/30 text-primary hover:bg-primary/10"
+            }`}
+          >
+            {c}
+          </button>
+        ))}
       </div>
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
