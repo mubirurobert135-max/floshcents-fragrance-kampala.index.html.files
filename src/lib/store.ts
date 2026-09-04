@@ -290,11 +290,91 @@ const INITIAL_ORDERS: Order[] = [
 
 const PRODUCTS_STORAGE_KEY = "flosh_cents_products_v3";
 const ORDERS_STORAGE_KEY = "flosh_cents_orders_v3";
+const LAST_SYNC_KEY = "flosh_cents_last_sync_timestamp";
+const RECENT_ORDERS_KEY = "flosh_cents_my_recent_orders";
 
-function notifyChange() {
-  if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("flosh-cents-store-sync"));
+const SYNC_CHANNEL_NAME = "flosh_cents_live_sync_v1";
+let broadcastChannel: BroadcastChannel | null = null;
+if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+  try {
+    broadcastChannel = new BroadcastChannel(SYNC_CHANNEL_NAME);
+  } catch {
+    broadcastChannel = null;
   }
+}
+
+export function notifyChange(type: "products" | "orders" | "all" = "all") {
+  if (typeof window === "undefined") return;
+  const now = Date.now();
+  try {
+    localStorage.setItem(LAST_SYNC_KEY, now.toString());
+  } catch {
+    // ignore
+  }
+
+  // Cross-tab / cross-frame broadcast
+  try {
+    broadcastChannel?.postMessage({ type, timestamp: now });
+  } catch {
+    // ignore
+  }
+
+  // Same-window custom event
+  try {
+    window.dispatchEvent(
+      new CustomEvent("flosh-cents-store-sync", {
+        detail: { type, timestamp: now },
+      }),
+    );
+  } catch {
+    // ignore
+  }
+}
+
+export function getLastSyncTimestamp(): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    return Number(localStorage.getItem(LAST_SYNC_KEY)) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+export function getMyRecentOrderIds(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(RECENT_ORDERS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveRecentOrderId(orderId: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const existing = getMyRecentOrderIds();
+    const updated = [orderId, ...existing.filter((id) => id !== orderId)].slice(0, 10);
+    localStorage.setItem(RECENT_ORDERS_KEY, JSON.stringify(updated));
+  } catch {
+    // ignore
+  }
+}
+
+export function findOrderByNumber(query: string): Order | null {
+  if (!query || typeof query !== "string") return null;
+  const clean = query.trim().replace(/^#/, "").toUpperCase();
+  if (!clean) return null;
+
+  const orders = getStoredOrders();
+  return (
+    orders.find((o) => {
+      const orderIdClean = o.id.replace(/^#/, "").toUpperCase();
+      return orderIdClean === clean;
+    }) || null
+  );
 }
 
 export function getStoredProducts(): Product[] {
@@ -320,7 +400,7 @@ export function saveAllProducts(products: Product[]): void {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
-    notifyChange();
+    notifyChange("products");
   } catch (e) {
     console.error("Storage save failed:", e);
   }
@@ -424,7 +504,7 @@ export function saveAllOrders(orders: Order[]): void {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(ORDERS_STORAGE_KEY, JSON.stringify(orders));
-    notifyChange();
+    notifyChange("orders");
   } catch (e) {
     console.error("Orders save failed:", e);
   }
@@ -490,6 +570,7 @@ export function createCustomerOrder(data: {
 
   const currentOrders = getStoredOrders();
   saveAllOrders([newOrder, ...currentOrders]);
+  saveRecentOrderId(newOrder.id);
 
   return newOrder;
 }

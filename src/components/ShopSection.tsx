@@ -1,13 +1,27 @@
 import { useState, useMemo } from "react";
 import { Product } from "../types/store";
 import { ProductCard } from "./ProductCard";
-import { Search, Filter, ArrowUpDown, Sparkles, Layers, Droplets, Tag, Check } from "lucide-react";
+import {
+  Search,
+  Filter,
+  ArrowUpDown,
+  Sparkles,
+  Layers,
+  Droplets,
+  Tag,
+  Check,
+  Package,
+  Truck,
+  ShieldCheck,
+  Radio,
+} from "lucide-react";
 
 interface ShopSectionProps {
   products: Product[];
   onSelectProduct: (product: Product) => void;
   onAddToCart: (product: Product) => void;
   onOpenAdmin?: () => void;
+  onOpenTrack?: (orderId?: string) => void;
 }
 
 type TypeFilter = "All" | "Spray Perfume" | "Oil Perfume";
@@ -15,12 +29,19 @@ type TagFilter = "All" | "Best Seller" | "New Arrival" | "Affordable";
 type SortOption = "featured" | "price-asc" | "price-desc" | "newest";
 type PriceFilter = "all" | "under-25k" | "25k-100k" | "above-100k";
 
-export function ShopSection({ products, onSelectProduct, onAddToCart }: ShopSectionProps) {
+export function ShopSection({
+  products,
+  onSelectProduct,
+  onAddToCart,
+  onOpenAdmin,
+  onOpenTrack,
+}: ShopSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<TypeFilter>("All");
   const [selectedTag, setSelectedTag] = useState<TagFilter>("All");
   const [selectedPrice, setSelectedPrice] = useState<PriceFilter>("all");
   const [sortBy, setSortBy] = useState<SortOption>("featured");
+  const [quickTrackId, setQuickTrackId] = useState("");
 
   // Filtered and sorted products list
   const filteredProducts = useMemo(() => {
@@ -89,17 +110,35 @@ export function ShopSection({ products, onSelectProduct, onAddToCart }: ShopSect
   return (
     <section id="shop" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-12">
-        <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary mb-3">
-          <Sparkles size={14} />
-          Kampala Fragrance Boutique
+      <div className="text-center max-w-2xl mx-auto mb-10">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
+            <Sparkles size={14} />
+            Kampala Fragrance Boutique
+          </div>
+
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-bold text-emerald-400">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            Live Inventory ({products.filter((p) => p.stock > 0).length} Available)
+          </div>
+
+          {onOpenTrack && (
+            <button
+              onClick={() => onOpenTrack()}
+              className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-card px-3.5 py-1.5 text-xs font-bold text-primary hover:bg-primary/10 hover:border-primary transition-all uppercase tracking-wider shadow-sm"
+            >
+              <Truck size={13} />
+              Track My Order
+            </button>
+          )}
         </div>
+
         <h2 className="font-display text-4xl sm:text-5xl font-bold tracking-tight text-foreground">
           Shop Our <span className="gold-text">Perfumes</span>
         </h2>
         <p className="mt-3 text-base text-muted-foreground">
           Explore artisanal spray perfumes and concentrated perfume oils starting from UGX 5,000 up
-          to executive flacons at UGX 200,000.
+          to executive flacons at UGX 200,000. Real-time Kampala inventory.
         </p>
       </div>
 

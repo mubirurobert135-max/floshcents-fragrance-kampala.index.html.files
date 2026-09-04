@@ -30,6 +30,7 @@ interface CheckoutModalProps {
   }) => Order;
   orderSuccess: Order | null;
   onClearOrderSuccess: () => void;
+  onTrackOrder?: (orderId: string) => void;
 }
 
 const KAMPALA_LOCATIONS = [
@@ -248,6 +249,20 @@ export function CheckoutModal({
                   <MessageCircle size={18} />
                   Send Order to Flosh on WhatsApp
                 </a>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const id = orderSuccess.id;
+                    onClearOrderSuccess();
+                    onClose();
+                    if (onTrackOrder) onTrackOrder(id);
+                  }}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-primary/50 bg-primary/10 py-3.5 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary/20 transition-all shadow-sm"
+                >
+                  <Truck size={16} />
+                  Track Order Status Live (#{orderSuccess.id})
+                </button>
 
                 <button
                   onClick={() => {

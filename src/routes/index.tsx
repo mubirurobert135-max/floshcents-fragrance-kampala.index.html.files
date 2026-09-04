@@ -16,6 +16,7 @@ import {
   Shield,
   Truck,
   Droplets,
+  Package,
 } from "lucide-react";
 import heroPerfume from "@/assets/hero-perfume.jpg";
 import aboutFlosh from "@/assets/about-flosh.jpg";
@@ -27,6 +28,7 @@ import { ProductDetailModal } from "../components/ProductDetailModal";
 import { CartDrawer } from "../components/CartDrawer";
 import { CheckoutModal } from "../components/CheckoutModal";
 import { AdminDashboard } from "../components/AdminDashboard";
+import { TrackOrderModal } from "../components/TrackOrderModal";
 import { WHATSAPP_NUMBER, WHATSAPP_DISPLAY, formatUGX } from "../lib/store";
 import { Product } from "../types/store";
 
@@ -83,9 +85,10 @@ interface HeaderProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenAdmin: () => void;
+  onOpenTrack: () => void;
 }
 
-function Header({ cartCount, onOpenCart, onOpenAdmin }: HeaderProps) {
+function Header({ cartCount, onOpenCart, onOpenAdmin, onOpenTrack }: HeaderProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -125,10 +128,26 @@ function Header({ cartCount, onOpenCart, onOpenAdmin }: HeaderProps) {
               {link.label}
             </a>
           ))}
+          <button
+            onClick={onOpenTrack}
+            className="text-xs font-bold tracking-widest text-muted-foreground uppercase transition-colors hover:text-primary flex items-center gap-1 cursor-pointer"
+          >
+            <Truck size={13} className="text-primary" /> Track Order
+          </button>
         </nav>
 
         {/* Header Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Quick Track Order Button */}
+          <button
+            onClick={onOpenTrack}
+            title="Track Order Status without Account"
+            className="inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all"
+          >
+            <Truck size={14} className="text-primary" />
+            <span className="hidden sm:inline">Track</span> Order
+          </button>
+
           {/* Owner Admin Portal Button */}
           <button
             onClick={onOpenAdmin}
@@ -178,7 +197,18 @@ function Header({ cartCount, onOpenCart, onOpenAdmin }: HeaderProps) {
                 {link.label}
               </a>
             ))}
-            <div className="pt-2 border-t border-border/60 flex items-center justify-between">
+
+            <button
+              onClick={() => {
+                setOpen(false);
+                onOpenTrack();
+              }}
+              className="text-left text-sm font-bold tracking-widest text-primary uppercase flex items-center gap-2 pt-1"
+            >
+              <Truck size={15} /> Track My Order
+            </button>
+
+            <div className="pt-3 border-t border-border/60 flex items-center justify-between">
               <button
                 onClick={() => {
                   setOpen(false);
@@ -197,7 +227,13 @@ function Header({ cartCount, onOpenCart, onOpenAdmin }: HeaderProps) {
   );
 }
 
-function Hero({ onShopClick }: { onShopClick: () => void }) {
+function Hero({
+  onShopClick,
+  onTrackClick,
+}: {
+  onShopClick: () => void;
+  onTrackClick?: () => void;
+}) {
   return (
     <section id="home" className="relative flex min-h-[92vh] items-center overflow-hidden">
       <img
@@ -263,6 +299,14 @@ function Hero({ onShopClick }: { onShopClick: () => void }) {
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={14} className="text-primary" /> Live stock & real-time inventory
             </span>
+            {onTrackClick && (
+              <button
+                onClick={onTrackClick}
+                className="flex items-center gap-1.5 text-primary hover:underline font-bold cursor-pointer uppercase tracking-wider text-[11px]"
+              >
+                <Package size={14} /> Track Existing Order
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -445,7 +489,12 @@ function Contact() {
   );
 }
 
-function Footer({ onOpenAdmin }: { onOpenAdmin: () => void }) {
+interface FooterProps {
+  onOpenAdmin: () => void;
+  onOpenTrack?: () => void;
+}
+
+function Footer({ onOpenAdmin, onOpenTrack }: FooterProps) {
   return (
     <footer className="border-t border-border bg-background py-14">
       <div className="mx-auto max-w-7xl px-6 text-center lg:px-10 space-y-6">
@@ -456,7 +505,7 @@ function Footer({ onOpenAdmin }: { onOpenAdmin: () => void }) {
           Luxury Perfumes & Fragrance House · Kampala, Uganda
         </p>
 
-        <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider uppercase text-muted-foreground">
+        <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider uppercase text-muted-foreground items-center">
           <a href="#home" className="hover:text-primary transition-colors">
             Home
           </a>
@@ -469,6 +518,14 @@ function Footer({ onOpenAdmin }: { onOpenAdmin: () => void }) {
           <a href="#contact" className="hover:text-primary transition-colors">
             Contact
           </a>
+          {onOpenTrack && (
+            <button
+              onClick={onOpenTrack}
+              className="hover:text-primary transition-colors flex items-center gap-1 cursor-pointer"
+            >
+              <Truck size={12} className="text-primary" /> Track My Order
+            </button>
+          )}
           <button
             onClick={onOpenAdmin}
             className="text-primary hover:underline font-bold flex items-center gap-1"
@@ -499,11 +556,16 @@ function Index() {
     isCartOpen,
     isCheckoutOpen,
     isAdminOpen,
+    isTrackOpen,
+    trackingOrderNumber,
     orderSuccess,
     setSelectedProduct,
     setIsCartOpen,
     setIsCheckoutOpen,
     setIsAdminOpen,
+    setIsTrackOpen,
+    setTrackingOrderNumber,
+    openTrackingWithOrder,
     setOrderSuccess,
     addToCart,
     updateCartQuantity,
@@ -521,6 +583,11 @@ function Index() {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleOpenGeneralTrack = () => {
+    setTrackingOrderNumber("");
+    setIsTrackOpen(true);
+  };
+
   const handleOrderNowFromModal = (product: Product, quantity: number) => {
     addToCart(product, quantity);
     setSelectedProduct(null);
@@ -534,10 +601,11 @@ function Index() {
         cartCount={cartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenTrack={handleOpenGeneralTrack}
       />
 
       {/* Hero with CTA */}
-      <Hero onShopClick={handleShopScroll} />
+      <Hero onShopClick={handleShopScroll} onTrackClick={handleOpenGeneralTrack} />
 
       {/* Customer Perfume Shop & Live Inventory Catalog */}
       <ShopSection
@@ -545,6 +613,7 @@ function Index() {
         onSelectProduct={(p) => setSelectedProduct(p)}
         onAddToCart={(p) => addToCart(p, 1)}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        onOpenTrack={(id) => (id ? openTrackingWithOrder(id) : handleOpenGeneralTrack())}
       />
 
       {/* About Flosh Section (preserves exact requested photo) */}
@@ -557,7 +626,7 @@ function Index() {
       <Contact />
 
       {/* Footer */}
-      <Footer onOpenAdmin={() => setIsAdminOpen(true)} />
+      <Footer onOpenAdmin={() => setIsAdminOpen(true)} onOpenTrack={handleOpenGeneralTrack} />
 
       {/* Product Details Modal */}
       <ProductDetailModal
@@ -595,6 +664,16 @@ function Index() {
         onSubmitOrder={handleCreateOrder}
         orderSuccess={orderSuccess}
         onClearOrderSuccess={() => setOrderSuccess(null)}
+        onTrackOrder={(orderId) => openTrackingWithOrder(orderId)}
+      />
+
+      {/* Customer 'Track My Order' Live Status Modal */}
+      <TrackOrderModal
+        isOpen={isTrackOpen}
+        onClose={() => setIsTrackOpen(false)}
+        initialOrderNumber={trackingOrderNumber}
+        orders={orders}
+        onShopClick={handleShopScroll}
       />
 
       {/* Flosh Admin Dashboard: Products, Stock & Customer Orders */}

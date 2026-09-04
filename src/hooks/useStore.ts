@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Product, Order, CartItem, OrderStatus } from "../types/store";
 import {
   getStoredProducts,
@@ -8,6 +8,8 @@ import {
   updateStockQuantity,
   createCustomerOrder,
   updateOrderStatus,
+  getLastSyncTimestamp,
+  findOrderByNumber,
 } from "../lib/store";
 import { toast } from "sonner";
 
@@ -21,16 +23,31 @@ export function useStore() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [isTrackOpen, setIsTrackOpen] = useState(false);
+  const [trackingOrderNumber, setTrackingOrderNumber] = useState("");
   const [orderSuccess, setOrderSuccess] = useState<Order | null>(null);
+  const [lastSyncTime, setLastSyncTime] = useState(Date.now());
+  const lastSyncTimestampRef = useRef<number>(0);
 
-  // Sync products and orders from localStorage
+  // Sync products and orders from storage
   const refresh = useCallback(() => {
-    setProducts(getStoredProducts());
-    setOrders(getStoredOrders());
+    const latestProducts = getStoredProducts();
+    const latestOrders = getStoredOrders();
+    setProducts(latestProducts);
+    setOrders(latestOrders);
+    setLastSyncTime(Date.now());
+
+    // Keep active product modal synced with live inventory
+    setSelectedProduct((prev) => {
+      if (!prev) return null;
+      const live = latestProducts.find((p) => p.id === prev.id);
+      return live || prev;
+    });
   }, []);
 
   useEffect(() => {
     refresh();
+    lastSyncTimestampRef.current = getLastSyncTimestamp();
 
     // Load initial cart
     try {
@@ -46,11 +63,40 @@ export function useStore() {
       refresh();
     };
 
+    // 1. Same-tab custom event
     window.addEventListener("flosh-cents-store-sync", onSync);
+    // 2. Cross-tab storage event
     window.addEventListener("storage", onSync);
+
+    // 3. Modern BroadcastChannel for instant cross-tab sync
+    let channel: BroadcastChannel | null = null;
+    if ("BroadcastChannel" in window) {
+      try {
+        channel = new BroadcastChannel("flosh_cents_live_sync_v1");
+        channel.onmessage = () => {
+          refresh();
+        };
+      } catch {
+        channel = null;
+      }
+    }
+
+    // 4. Sub-second heartbeat poll to guarantee zero-lag live updates across sandboxed views
+    const interval = setInterval(() => {
+      const current = getLastSyncTimestamp();
+      if (current > lastSyncTimestampRef.current) {
+        lastSyncTimestampRef.current = current;
+        refresh();
+      }
+    }, 750);
+
     return () => {
       window.removeEventListener("flosh-cents-store-sync", onSync);
       window.removeEventListener("storage", onSync);
+      if (channel) {
+        channel.close();
+      }
+      clearInterval(interval);
     };
   }, [refresh]);
 
@@ -220,6 +266,11 @@ export function useStore() {
     [refresh],
   );
 
+  const openTrackingWithOrder = useCallback((orderId: string) => {
+    setTrackingOrderNumber(orderId);
+    setIsTrackOpen(true);
+  }, []);
+
   return {
     products,
     orders,
@@ -230,11 +281,17 @@ export function useStore() {
     isCartOpen,
     isCheckoutOpen,
     isAdminOpen,
+    isTrackOpen,
+    trackingOrderNumber,
     orderSuccess,
+    lastSyncTime,
     setSelectedProduct,
     setIsCartOpen,
     setIsCheckoutOpen,
     setIsAdminOpen,
+    setIsTrackOpen,
+    setTrackingOrderNumber,
+    openTrackingWithOrder,
     setOrderSuccess,
     addToCart,
     updateCartQuantity,
