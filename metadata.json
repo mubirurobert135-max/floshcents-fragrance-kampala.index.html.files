@@ -1,0 +1,6 @@
+{
+  "name": "Flosh Cents",
+  "description": "Luxury fragrance house in Kampala, Uganda offering premium oil perfumes, spray perfumes, designer-inspired scents, and custom collections.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

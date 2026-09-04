@@ -199,7 +199,7 @@ function useScrollReveal() {
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
@@ -225,8 +225,7 @@ function Header() {
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
         <a href="#home" className="font-display text-2xl font-semibold tracking-wide">
-          <span className="gold-text">Flosh</span>{" "}
-          <span className="text-foreground">Cents</span>
+          <span className="gold-text">Flosh</span> <span className="text-foreground">Cents</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -299,13 +298,12 @@ function Hero() {
           </div>
 
           <h1 className="font-display text-5xl leading-[1.05] font-medium sm:text-6xl lg:text-7xl">
-            Fragrance That Tells{" "}
-            <em className="gold-text not-italic">Your Story</em>
+            Fragrance That Tells <em className="gold-text not-italic">Your Story</em>
           </h1>
 
           <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-            Premium perfumes crafted for elegance, confidence and unforgettable
-            moments — bottled in the heart of Kampala.
+            Premium perfumes crafted for elegance, confidence and unforgettable moments — bottled in
+            the heart of Kampala.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -315,10 +313,7 @@ function Hero() {
             >
               <ShoppingBag size={18} />
               Shop Collection
-              <ArrowRight
-                size={16}
-                className="transition-transform group-hover:translate-x-1"
-              />
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href="#about"
@@ -354,14 +349,10 @@ function Products({
   onRemove: (name: string) => void;
 }) {
   const [filter, setFilter] = useState<"All" | Category>("All");
-  const visible =
-    filter === "All" ? products : products.filter((p) => p.category === filter);
+  const visible = filter === "All" ? products : products.filter((p) => p.category === filter);
 
   return (
-    <section
-      id="shop"
-      className="relative overflow-hidden px-6 py-24 lg:px-10"
-    >
+    <section id="shop" className="relative overflow-hidden px-6 py-24 lg:px-10">
       <img
         src={floshPortrait2.url}
         alt=""
@@ -372,114 +363,114 @@ function Products({
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background via-background/92 to-background" />
 
       <div className="relative mx-auto max-w-7xl">
-      <div className="reveal mb-10 text-center">
-        <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-          The Store
-        </span>
-        <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-          Perfume <span className="gold-text">Store</span>
-        </h2>
-        <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
-          Oil perfumes, sprays, designer-inspired scents and gift sets — from
-          UGX 5,000 to UGX 200,000. Live stock updated by Flosh.
-        </p>
-        <div className="gold-line mx-auto mt-6 h-px w-40" />
-      </div>
+        <div className="reveal mb-10 text-center">
+          <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
+            The Store
+          </span>
+          <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
+            Perfume <span className="gold-text">Store</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground">
+            Oil perfumes, sprays, designer-inspired scents and gift sets — from UGX 5,000 to UGX
+            200,000. Live stock updated by Flosh.
+          </p>
+          <div className="gold-line mx-auto mt-6 h-px w-40" />
+        </div>
 
-      <div className="reveal mb-12 flex flex-wrap justify-center gap-3">
-        {(["All", ...CATEGORIES] as const).map((c) => (
-          <button
-            key={c}
-            onClick={() => setFilter(c)}
-            className={`rounded-full border px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors ${
-              filter === c
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-primary/30 text-primary hover:bg-primary/10"
-            }`}
-          >
-            {c}
-          </button>
-        ))}
-      </div>
+        <div className="reveal mb-12 flex flex-wrap justify-center gap-3">
+          {(["All", ...CATEGORIES] as const).map((c) => (
+            <button
+              key={c}
+              onClick={() => setFilter(c)}
+              className={`rounded-full border px-5 py-2 text-xs font-bold tracking-widest uppercase transition-colors ${
+                filter === c
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-primary/30 text-primary hover:bg-primary/10"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((product: Product, i: number) => (
-          <article
-            key={product.name}
-            className="reveal group relative overflow-hidden rounded-3xl border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-gold"
-            style={{ transitionDelay: `${i * 90}ms` }}
-          >
-            <div className="relative overflow-hidden">
-              <img
-                src={product.image}
-                alt={`${product.name} perfume bottle by Flosh Cents`}
-                width={800}
-                height={1000}
-                loading="lazy"
-                className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <span className="absolute top-4 left-4 rounded-full bg-background/70 px-3 py-1 text-[11px] font-bold tracking-widest text-primary uppercase backdrop-blur">
-                {product.tag}
-              </span>
-              {product.custom && (
-                <button
-                  onClick={() => onRemove(product.name)}
-                  aria-label={`Remove ${product.name}`}
-                  className="absolute top-4 right-4 rounded-full bg-background/70 p-2 text-destructive backdrop-blur transition-transform hover:scale-110"
-                >
-                  <Trash2 size={14} />
-                </button>
-              )}
-            </div>
-
-            <div className="p-6">
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-display text-2xl font-medium">{product.name}</h3>
-                <span className="mt-1 shrink-0 rounded-full border border-primary/30 px-2 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
-                  {product.size}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {visible.map((product: Product, i: number) => (
+            <article
+              key={product.name}
+              className="reveal group relative overflow-hidden rounded-3xl border border-border bg-card transition-all duration-500 hover:-translate-y-2 hover:border-primary/40 hover:shadow-gold"
+              style={{ transitionDelay: `${i * 90}ms` }}
+            >
+              <div className="relative overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={`${product.name} perfume bottle by Flosh Cents`}
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <span className="absolute top-4 left-4 rounded-full bg-background/70 px-3 py-1 text-[11px] font-bold tracking-widest text-primary uppercase backdrop-blur">
+                  {product.tag}
                 </span>
-              </div>
-              <p className="mt-1 text-xs tracking-widest text-primary uppercase">
-                {product.notes}
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {product.description}
-              </p>
-
-              <p className="mt-3 text-xs tracking-widest text-muted-foreground uppercase">
-                {product.category} ·{" "}
-                {product.stock > 0 ? (
-                  <span className="text-primary">{product.stock} in stock</span>
-                ) : (
-                  <span className="text-destructive">Sold out</span>
+                {product.custom && (
+                  <button
+                    onClick={() => onRemove(product.name)}
+                    aria-label={`Remove ${product.name}`}
+                    className="absolute top-4 right-4 rounded-full bg-background/70 p-2 text-destructive backdrop-blur transition-transform hover:scale-110"
+                  >
+                    <Trash2 size={14} />
+                  </button>
                 )}
-              </p>
-
-              <div className="mt-5 flex items-center justify-between">
-                <span className="font-display text-xl font-semibold text-primary">
-                  {ugx(product.price)}
-                </span>
-                <a
-                  href={whatsappLink(
-                    `Hello Flosh Cents! I'd like to order ${product.name} (${product.size}) — ${ugx(product.price)}.`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() =>
-                    toast.success(`Ordering ${product.name} on WhatsApp`, {
-                      description: "Flosh will confirm delivery in Kampala.",
-                    })
-                  }
-                  className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-105"
-                >
-                  <ShoppingBag size={14} />
-                  Order
-                </a>
               </div>
-            </div>
-          </article>
-        ))}
-      </div>
+
+              <div className="p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-display text-2xl font-medium">{product.name}</h3>
+                  <span className="mt-1 shrink-0 rounded-full border border-primary/30 px-2 py-1 text-[10px] font-bold tracking-widest text-primary uppercase">
+                    {product.size}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs tracking-widest text-primary uppercase">
+                  {product.notes}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  {product.description}
+                </p>
+
+                <p className="mt-3 text-xs tracking-widest text-muted-foreground uppercase">
+                  {product.category} ·{" "}
+                  {product.stock > 0 ? (
+                    <span className="text-primary">{product.stock} in stock</span>
+                  ) : (
+                    <span className="text-destructive">Sold out</span>
+                  )}
+                </p>
+
+                <div className="mt-5 flex items-center justify-between">
+                  <span className="font-display text-xl font-semibold text-primary">
+                    {ugx(product.price)}
+                  </span>
+                  <a
+                    href={whatsappLink(
+                      `Hello Flosh Cents! I'd like to order ${product.name} (${product.size}) — ${ugx(product.price)}.`,
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      toast.success(`Ordering ${product.name} on WhatsApp`, {
+                        description: "Flosh will confirm delivery in Kampala.",
+                      })
+                    }
+                    className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold tracking-wide text-primary-foreground uppercase transition-transform hover:scale-105"
+                  >
+                    <ShoppingBag size={14} />
+                    Order
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -524,14 +515,14 @@ function About() {
             About <span className="gold-text">Flosh Cents</span>
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Flosh Cents is a luxury fragrance brand based in Kampala, Uganda.
-            Founded by Flosh, our mission is to create unique scents that
-            express personality, confidence and unforgettable memories.
+            Flosh Cents is a luxury fragrance brand based in Kampala, Uganda. Founded by Flosh, our
+            mission is to create unique scents that express personality, confidence and
+            unforgettable memories.
           </p>
           <p className="mt-4 leading-relaxed text-muted-foreground">
-            Every bottle is blended with premium oils and inspired by the
-            richness of Africa — from blooming gardens to midnight city air.
-            We believe a scent is more than perfume: it is your signature.
+            Every bottle is blended with premium oils and inspired by the richness of Africa — from
+            blooming gardens to midnight city air. We believe a scent is more than perfume: it is
+            your signature.
           </p>
 
           <div className="mt-8 flex items-center gap-3 text-sm text-primary">
@@ -580,9 +571,7 @@ function Features() {
               <feature.icon size={24} />
             </div>
             <h3 className="font-display mt-4 text-xl font-medium">{feature.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {feature.text}
-            </p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.text}</p>
           </div>
         ))}
       </div>
@@ -597,9 +586,7 @@ function Footer() {
         <p className="font-display text-3xl font-semibold">
           <span className="gold-text">Flosh</span> Cents
         </p>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Luxury Perfumes · Kampala, Uganda
-        </p>
+        <p className="mt-3 text-sm text-muted-foreground">Luxury Perfumes · Kampala, Uganda</p>
         <div className="gold-line mx-auto mt-6 h-px w-32" />
         <p className="mt-6 text-xs tracking-widest text-muted-foreground uppercase">
           © 2026 Flosh Cents — All rights reserved
@@ -625,11 +612,7 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
 
   const update =
     (key: keyof typeof form) =>
-    (
-      e: React.ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >
-    ) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
       setForm((f) => ({ ...f, [key]: e.target.value }));
 
   const onImage = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -706,17 +689,13 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
             Add Stock to the <span className="gold-text">Store</span>
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Flosh adds new perfumes here — they appear instantly in the store
-            above for customers to see and order.
+            Flosh adds new perfumes here — they appear instantly in the store above for customers to
+            see and order.
           </p>
           <div className="gold-line mx-auto mt-6 h-px w-40" />
         </div>
 
-
-        <form
-          onSubmit={submit}
-          className="reveal glass-panel space-y-5 rounded-3xl p-8"
-        >
+        <form onSubmit={submit} className="reveal glass-panel space-y-5 rounded-3xl p-8">
           <div className="grid gap-5 sm:grid-cols-2">
             <input
               className={inputCls}
@@ -737,11 +716,7 @@ function AddPerfume({ onAdd }: { onAdd: (p: Product) => void }) {
               value={form.notes}
               onChange={update("notes")}
             />
-            <select
-              className={inputCls}
-              value={form.category}
-              onChange={update("category")}
-            >
+            <select className={inputCls} value={form.category} onChange={update("category")}>
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>
                   {c}
@@ -827,39 +802,40 @@ function Contact() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-card/90 via-card/85 to-card" />
         <div className="animate-glow-pulse absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
         <div className="relative">
-        <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-          Get in Touch
-        </span>
-        <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-          Order on <span className="gold-text">WhatsApp</span>
-        </h2>
-        <p className="mx-auto mt-5 max-w-md leading-relaxed text-muted-foreground">
-          Message Flosh directly to order, ask about a scent, or book a
-          fragrance consultation in Kampala.
-        </p>
+          <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
+            Get in Touch
+          </span>
+          <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
+            Order on <span className="gold-text">WhatsApp</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-md leading-relaxed text-muted-foreground">
+            Message Flosh directly to order, ask about a scent, or book a fragrance consultation in
+            Kampala.
+          </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href={whatsappLink("Hello Flosh Cents! I'd like to order a perfume.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase shadow-gold transition-transform hover:scale-105"
-          >
-            <MessageCircle size={18} />
-            WhatsApp Us
-          </a>
-          <a
-            href={`tel:+${WHATSAPP_NUMBER}`}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-8 py-4 text-sm font-semibold tracking-wide text-primary uppercase transition-colors hover:bg-primary/10"
-          >
-            <Phone size={16} />
-            {WHATSAPP_DISPLAY}
-          </a>
-        </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href={whatsappLink("Hello Flosh Cents! I'd like to order a perfume.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold tracking-wide text-primary-foreground uppercase shadow-gold transition-transform hover:scale-105"
+            >
+              <MessageCircle size={18} />
+              WhatsApp Us
+            </a>
+            <a
+              href={`tel:+${WHATSAPP_NUMBER}`}
+              className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-8 py-4 text-sm font-semibold tracking-wide text-primary uppercase transition-colors hover:bg-primary/10"
+            >
+              <Phone size={16} />
+              {WHATSAPP_DISPLAY}
+            </a>
+          </div>
 
-        <div className="mt-8 flex items-center justify-center gap-3 text-sm text-muted-foreground">
-          <MapPin size={16} className="text-primary" />
-          Kampala, Uganda
+          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-muted-foreground">
+            <MapPin size={16} className="text-primary" />
+            Kampala, Uganda
+          </div>
         </div>
       </div>
     </section>

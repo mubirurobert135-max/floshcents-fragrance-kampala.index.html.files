@@ -14,7 +14,6 @@ Style: Luxury fragrance brand (dark elegant theme, premium visuals, smooth anima
 
 Technology: HTML5 + CSS3 + JavaScript + modern UI/UX principles
 
-
 Features included:
 
 Luxury hero section
@@ -38,7 +37,6 @@ Kampala Uganda branding
 Navigation menu
 
 Modern typography
-
 
 Create a file named index.html and paste this code:
 
@@ -214,9 +212,7 @@ display:none;
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -233,8 +229,6 @@ Flosh Cents
 
 </header>
 
-
-
 <div class="hero">
 
 <div>
@@ -247,17 +241,13 @@ Fragrance That Tells <span>Your Story</span>
 Premium perfumes crafted for elegance, confidence and unforgettable moments.
 </p>
 
-
 <button onclick="shop()">
 Shop Collection
 </button>
 
-
 </div>
 
 </div>
-
-
 
 <section>
 
@@ -265,9 +255,7 @@ Shop Collection
 Customer Favourites
 </h2>
 
-
 <div class="products">
-
 
 <div class="card">
 
@@ -285,8 +273,6 @@ UGX 150,000
 
 </div>
 
-
-
 <div class="card">
 
 <img src="https://images.unsplash.com/photo-1595425970377-c9703cf48b6b">
@@ -302,9 +288,6 @@ UGX 180,000
 </div>
 
 </div>
-
-
-
 
 <div class="card">
 
@@ -322,22 +305,15 @@ UGX 120,000
 
 </div>
 
-
 </div>
 
 </section>
 
-
-
-
 <section>
-
 
 <div class="about">
 
-
 <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b">
-
 
 <div>
 
@@ -345,55 +321,40 @@ UGX 120,000
 About Flosh Cents
 </h2>
 
-
 <p>
 Flosh Cents is a luxury fragrance brand based in Kampala, Uganda.
 Founded by Flosh, our mission is to create unique scents that express
 personality, confidence and unforgettable memories.
 </p>
 
-
 </div>
 
-
 </div>
-
 
 </section>
 
-
-
-
 <section>
 
-
 <div class="features">
-
 
 <div class="feature">
 <h2>⏳</h2>
 <p>Long Lasting</p>
 </div>
 
-
 <div class="feature">
 <h2>🌿</h2>
 <p>Inspired By Nature</p>
 </div>
-
 
 <div class="feature">
 <h2>✨</h2>
 <p>Premium Quality</p>
 </div>
 
-
 </div>
 
-
 </section>
-
-
 
 <footer>
 
@@ -402,8 +363,6 @@ personality, confidence and unforgettable memories.
 Luxury Perfumes | Kampala Uganda
 
 </footer>
-
-
 
 <script>
 
@@ -415,7 +374,6 @@ alert("Welcome to Flosh Cents perfume collection!");
 
 </script>
 
-
 </body>
 </html>
 
@@ -423,19 +381,13 @@ Possible upgrades for a full business website:
 
 1. Add shopping cart and checkout.
 
-
 2. Connect payments (MTN Mobile Money / Airtel Money).
-
 
 3. Add WhatsApp ordering.
 
-
 4. Add admin dashboard to manage perfumes.
 
-
 5. Deploy on Netlify with a custom domain.
-
-
 
 This design can be developed further into a complete Flosh Cents online perfume store.
 https://images.unsplash.com/photo-1541643600914-78b084683601
