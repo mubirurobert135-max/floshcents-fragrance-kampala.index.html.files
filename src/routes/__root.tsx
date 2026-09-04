@@ -78,14 +78,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Flosh Cents | Luxury Perfumes & Online Shop Kampala" },
+      {
+        name: "description",
+        content:
+          "Flosh Cents is a luxury fragrance house in Kampala, Uganda offering premium oil perfumes, spray perfumes, live stock management, and online ordering.",
+      },
+      { name: "author", content: "Flosh Cents" },
+      { property: "og:title", content: "Flosh Cents | Luxury Perfumes & Online Shop Kampala" },
+      {
+        property: "og:description",
+        content:
+          "Explore handcrafted perfume oils and sprays from UGX 5,000 to UGX 200,000 with same-day Kampala delivery.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:site", content: "@FloshCents" },
     ],
     links: [
       {
