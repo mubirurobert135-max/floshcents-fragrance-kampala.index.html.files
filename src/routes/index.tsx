@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  Clock3,
-  Leaf,
   Sparkles,
   ShoppingBag,
   Menu,
@@ -18,6 +16,7 @@ import {
   Droplets,
   Package,
   Flower2,
+  Zap,
 } from "lucide-react";
 import heroPerfume from "@/assets/hero-perfume.jpg";
 import aboutFlosh from "@/assets/about-flosh.jpg";
@@ -30,7 +29,12 @@ import { CartDrawer } from "../components/CartDrawer";
 import { CheckoutModal } from "../components/CheckoutModal";
 import { AdminDashboard } from "../components/AdminDashboard";
 import { TrackOrderModal } from "../components/TrackOrderModal";
+import { FloshLogo } from "../components/FloshLogo";
 import {
+  BUSINESS_NAME,
+  BUSINESS_OWNER,
+  BUSINESS_LOCATION,
+  BUSINESS_TAGLINE,
   WHATSAPP_NUMBER,
   WHATSAPP_DISPLAY,
   SUE_PHONE_NUMBER,
@@ -44,17 +48,16 @@ import { Product } from "../types/store";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Flosh Scents | Luxury Perfumes & Online Shop Kampala" },
+      { title: "Flosh Scents | Scent of Confidence • Essence of Luxury" },
       {
         name: "description",
         content:
-          "Flosh Scents is a luxury fragrance house in Kampala, Uganda offering premium oil perfumes, spray perfumes, live stock management, and online ordering.",
+          "Flosh Scents is a luxury fragrance house in Kampala, Uganda. Premium perfumes, Eau de Parfum, and concentrated oils. Find your signature.",
       },
-      { property: "og:title", content: "Flosh Scents | Luxury Perfumes & Online Shop Kampala" },
+      { property: "og:title", content: "Flosh Scents | Scent of Confidence • Essence of Luxury" },
       {
         property: "og:description",
-        content:
-          "Explore handcrafted perfume oils and sprays from UGX 5,000 to UGX 200,000 with same-day Kampala delivery.",
+        content: "Explore the official Flosh Scents collection with same-day Kampala delivery.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -63,12 +66,12 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+// Simplified Navigation
 const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Shop Perfumes", href: "#shop" },
-  { label: "About Flosh", href: "#about" },
-  { label: "Why Flosh", href: "#why-us" },
-  { label: "Contact", href: "#contact" },
+  { label: "HOME", href: "#home" },
+  { label: "SHOP", href: "#shop" },
+  { label: "ABOUT", href: "#about" },
+  { label: "CONTACT", href: "#contact" },
 ];
 
 function useScrollReveal() {
@@ -111,63 +114,53 @@ function Header({ cartCount, onOpenCart, onOpenAdmin, onOpenTrack }: HeaderProps
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
-        scrolled ? "glass-panel shadow-lg border-b border-border/80 py-3" : "bg-transparent py-5"
+        scrolled
+          ? "bg-black/90 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.8)] border-b border-[#D4AF37]/30 py-3"
+          : "bg-transparent py-5"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-10">
-        {/* Brand Logo */}
-        <a
-          href="#home"
-          className="flex items-center gap-2 font-display text-2xl font-bold tracking-wide"
-        >
-          <span className="gold-text">Flosh</span> <span className="text-foreground">Scents</span>
-          <span className="hidden sm:inline-block rounded-full bg-primary/15 border border-primary/30 px-2 py-0.5 text-[10px] font-bold text-primary tracking-widest uppercase">
-            Kampala
-          </span>
+        {/* Official Flosh Scents Gold & Black Logo */}
+        <a href="#home" className="flex items-center gap-2 group">
+          <FloshLogo size="sm" showTagline={false} />
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden items-center gap-7 md:flex">
+        {/* Desktop Simplified Navigation: HOME | SHOP | ABOUT | CONTACT */}
+        <nav className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-xs font-bold tracking-widest text-muted-foreground uppercase transition-colors hover:text-primary"
+              className="text-xs font-bold tracking-[0.25em] text-foreground/80 uppercase transition-colors hover:text-[#F3E5AB]"
             >
               {link.label}
             </a>
           ))}
-          <button
-            onClick={onOpenTrack}
-            className="text-xs font-bold tracking-widest text-muted-foreground uppercase transition-colors hover:text-primary flex items-center gap-1 cursor-pointer"
-          >
-            <Truck size={13} className="text-primary" /> Track Order
-          </button>
         </nav>
 
         {/* Header Actions */}
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Quick Track Order Button */}
+          {/* Track Order */}
           <button
             onClick={onOpenTrack}
-            title="Track Order Status without Account"
-            className="inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all"
+            title="Track Order Status"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-card/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground hover:border-[#D4AF37]/40 transition-all"
           >
-            <Truck size={14} className="text-primary" />
-            <span className="hidden sm:inline">Track</span> Order
+            <Truck size={13} className="text-[#D4AF37]" />
+            <span>Track</span>
           </button>
 
-          {/* Owner Admin Portal Button */}
+          {/* Owner Admin Portal */}
           <button
             onClick={onOpenAdmin}
             title="Owner Stock & Orders Dashboard"
-            className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-primary hover:bg-primary/20 hover:border-primary/50 transition-all"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#F3E5AB] hover:bg-[#D4AF37]/20 transition-all"
           >
-            <Shield size={14} />
-            <span className="hidden sm:inline">Owner</span> Admin
+            <Shield size={13} />
+            <span className="hidden sm:inline">Admin</span>
           </button>
 
-          {/* Cart Bag Button */}
+          {/* Shopping Bag Button */}
           <button
             onClick={onOpenCart}
             aria-label="Open shopping bag"
@@ -194,14 +187,14 @@ function Header({ cartCount, onOpenCart, onOpenAdmin, onOpenTrack }: HeaderProps
 
       {/* Mobile Drawer Menu */}
       {open && (
-        <nav className="glass-panel border-t border-border px-6 py-6 md:hidden">
-          <div className="flex flex-col gap-4">
+        <nav className="bg-black/95 backdrop-blur-xl border-t border-[#D4AF37]/30 px-6 py-6 md:hidden">
+          <div className="flex flex-col gap-5">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-sm font-bold tracking-widest text-foreground uppercase hover:text-primary transition-colors"
+                className="text-sm font-bold tracking-[0.2em] text-foreground uppercase hover:text-[#F3E5AB] transition-colors"
               >
                 {link.label}
               </a>
@@ -212,20 +205,20 @@ function Header({ cartCount, onOpenCart, onOpenAdmin, onOpenTrack }: HeaderProps
                 setOpen(false);
                 onOpenTrack();
               }}
-              className="text-left text-sm font-bold tracking-widest text-primary uppercase flex items-center gap-2 pt-1"
+              className="text-left text-sm font-bold tracking-[0.2em] text-[#D4AF37] uppercase flex items-center gap-2 pt-2 border-t border-white/10"
             >
               <Truck size={15} /> Track My Order
             </button>
 
-            <div className="pt-3 border-t border-border/60 flex items-center justify-between">
+            <div className="pt-2 flex items-center justify-between">
               <button
                 onClick={() => {
                   setOpen(false);
                   onOpenAdmin();
                 }}
-                className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-primary uppercase"
+                className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-[#F3E5AB] uppercase"
               >
-                <Shield size={14} /> Flosh Admin Dashboard
+                <Shield size={14} /> Flosh Admin Portal
               </button>
               <span className="text-xs text-muted-foreground">Kampala, UG</span>
             </div>
@@ -238,104 +231,76 @@ function Header({ cartCount, onOpenCart, onOpenAdmin, onOpenTrack }: HeaderProps
 
 function Hero({
   onShopClick,
-  onTrackClick,
+  onOrderNowClick,
 }: {
   onShopClick: () => void;
-  onTrackClick?: () => void;
+  onOrderNowClick: () => void;
 }) {
   return (
-    <section id="home" className="relative flex min-h-[92vh] items-center overflow-hidden">
+    <section
+      id="home"
+      className="relative flex min-h-[92vh] items-center justify-center overflow-hidden bg-black text-center"
+    >
+      {/* Background imagery with deep luxury black treatment */}
       <img
         src={heroPerfume}
-        alt="Flosh Scents luxury amber perfume bottle glowing against a dark green backdrop"
+        alt="Flosh Scents luxury fragrance bottle glowing in darkness"
         width={1920}
         height={1080}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        priority="true"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-black/80 to-black/90" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.15)_0%,rgba(0,0,0,0.85)_75%)]" />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-32 pb-20 lg:px-10">
-        <div className="max-w-2xl">
-          <div className="reveal is-visible mb-6 flex items-center gap-3">
-            <span className="gold-line h-px w-12" />
-            <span className="text-xs font-bold tracking-[0.3em] text-primary uppercase">
-              Kampala · Uganda
-            </span>
-          </div>
-
-          <h1 className="font-display text-5xl leading-[1.05] font-medium sm:text-6xl lg:text-7xl">
-            Fragrance That Tells <em className="gold-text not-italic">Your Story</em>
-          </h1>
-
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
-            Artisanal spray perfumes and concentrated perfume oils crafted for elegance and
-            presence. From pocket gems at <strong>UGX 5,000</strong> to signature flacons at{" "}
-            <strong>UGX 200,000</strong>.
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-4">
-            <button
-              onClick={onShopClick}
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-xs font-bold tracking-widest text-primary-foreground uppercase shadow-gold transition-all hover:scale-105"
-            >
-              <ShoppingBag size={16} />
-              Shop Perfumes
-              <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-            </button>
-
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                "Hello Flosh! I'm visiting the Flosh Scents store and would like to order a fragrance.",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-card/60 backdrop-blur px-8 py-4 text-xs font-bold tracking-widest text-primary uppercase transition-colors hover:bg-primary/10"
-            >
-              <MessageCircle size={16} />
-              WhatsApp Consultation
-            </a>
-          </div>
-
-          {/* Quick Perks Pill */}
-          <div className="mt-10 flex flex-wrap items-center gap-6 text-xs text-muted-foreground pt-4 border-t border-border/40">
-            <span className="flex items-center gap-1.5">
-              <Truck size={14} className="text-primary" /> Same-day delivery in Kampala
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Droplets size={14} className="text-primary" /> Pure concentrated perfume oils
-            </span>
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck size={14} className="text-primary" /> Live stock & real-time inventory
-            </span>
-            {onTrackClick && (
-              <button
-                onClick={onTrackClick}
-                className="flex items-center gap-1.5 text-primary hover:underline font-bold cursor-pointer uppercase tracking-wider text-[11px]"
-              >
-                <Package size={14} /> Track Existing Order
-              </button>
-            )}
-          </div>
+      {/* Main Hero Content */}
+      <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pt-32 pb-20 flex flex-col items-center">
+        {/* Kampala, Uganda Gold Badge */}
+        <div className="reveal is-visible mb-6 inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/40 bg-black/60 px-4 py-1.5 text-xs font-bold tracking-[0.25em] text-[#F3E5AB] uppercase backdrop-blur-md shadow-sm">
+          <MapPin size={13} className="text-[#D4AF37]" />
+          <span>Kampala, Uganda</span>
         </div>
-      </div>
 
-      {/* Floating Review Card */}
-      <div className="animate-float absolute right-10 bottom-12 hidden lg:block">
-        <div className="glass-panel rounded-2xl p-5 border border-primary/30 max-w-xs shadow-2xl">
-          <div className="flex items-center gap-1.5 text-primary">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} size={14} fill="currentColor" />
-            ))}
-          </div>
-          <p className="mt-2 text-xs font-medium text-foreground leading-snug">
-            "The Vanilla Silk Oil and Royal Bloom are divine! Long lasting and the Kampala delivery
-            was so fast."
-          </p>
-          <span className="mt-2 text-[10px] text-muted-foreground uppercase tracking-wider block font-semibold">
-            — Sharon M., Kololo
-          </span>
+        {/* Prominent Official Flosh Scents Gold & Black Emblem */}
+        <div className="mb-6 flex flex-col items-center">
+          <FloshLogo size="hero" showTagline={true} className="flex-col text-center" />
         </div>
+
+        {/* Tagline */}
+        <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal uppercase tracking-wider text-foreground">
+          FIND YOUR <span className="gold-text">SIGNATURE</span>
+        </h1>
+
+        {/* Subhead */}
+        <p className="mt-4 max-w-xl text-lg sm:text-xl font-light tracking-wide text-foreground/85">
+          Premium scents. Unforgettable presence.
+        </p>
+
+        {/* Action Buttons: SHOP COLLECTION | ORDER NOW */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <button
+            onClick={onShopClick}
+            className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-xs font-bold tracking-[0.2em] text-primary-foreground uppercase shadow-gold transition-all hover:scale-105 hover:bg-primary/90"
+          >
+            <ShoppingBag size={16} />
+            <span>SHOP COLLECTION</span>
+            <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+          </button>
+
+          <button
+            onClick={onOrderNowClick}
+            className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/60 bg-black/70 px-8 py-4 text-xs font-bold tracking-[0.2em] text-[#F3E5AB] uppercase backdrop-blur transition-all hover:bg-[#D4AF37]/20 hover:scale-105"
+          >
+            <Zap size={16} className="text-[#D4AF37]" />
+            <span>ORDER NOW</span>
+          </button>
+        </div>
+
+        {/* Subtle delivery highlight */}
+        <p className="mt-8 text-xs tracking-widest text-muted-foreground uppercase flex items-center justify-center gap-2">
+          <Truck size={14} className="text-[#D4AF37]" />
+          <span>Same-Day Kampala Delivery • 100% Authentic Scents</span>
+        </p>
       </div>
     </section>
   );
@@ -343,100 +308,97 @@ function Hero({
 
 function About() {
   return (
-    <section id="about" className="relative overflow-hidden bg-forest py-24">
-      <div className="animate-glow-pulse absolute -top-32 -right-32 h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-10">
-        <div className="reveal relative pb-10">
-          <div className="absolute -inset-4 rounded-3xl border border-primary/25" />
-          <img
-            src="/IMG-20260902-WA0057.jpg"
-            onError={(e) => {
-              const target = e.currentTarget;
-              if (target.src !== floshPortrait && !target.src.endsWith(floshPortrait)) {
-                target.src = floshPortrait;
-              }
-            }}
-            alt="Flosh, founder and perfumer of Flosh Scents, smiling in a sunlit botanical garden in Kampala"
-            width={896}
-            height={1200}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            className="relative aspect-[3/4] w-full rounded-3xl object-cover object-top shadow-2xl"
-          />
-          <div className="glass-panel absolute -bottom-4 left-6 rounded-2xl px-6 py-4 border border-primary/30 shadow-xl">
-            <p className="font-display text-lg font-bold text-primary">Flosh</p>
-            <p className="text-xs tracking-widest text-muted-foreground uppercase">
-              Founder & Perfumer
-            </p>
-          </div>
-        </div>
-
-        <div className="reveal">
-          <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-            Our Story
-          </span>
-          <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-            About <span className="gold-text">Flosh Scents</span>
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Flosh Scents is a luxury fragrance house based in Kampala, Uganda. Founded by Flosh, our
-            mission is to craft evocative scents that express personality, confidence and
-            unforgettable memories.
-          </p>
-          <p className="mt-4 leading-relaxed text-muted-foreground">
-            Every bottle is blended with premium oils and inspired by the natural beauty and vibrant
-            pulse of Kampala — from morning rain over the hills to intimate midnight soirees.
-          </p>
-
-          <div className="mt-8 flex items-center gap-3 text-sm text-primary font-medium">
-            <MapPin size={18} />
-            <span className="tracking-wide">Kampala, Uganda · Direct Store & Workshop</span>
-          </div>
-
-          <a
-            href="#shop"
-            className="group mt-8 inline-flex items-center gap-2 text-xs font-bold tracking-widest text-primary uppercase"
-          >
-            Explore the perfumes
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const FEATURES = [
-  {
-    icon: Clock3,
-    title: "Long Lasting Longevity",
-    text: "Formulated with high-concentration essential oils that remain vibrant from morning until midnight.",
-  },
-  {
-    icon: Leaf,
-    title: "African Botanicals",
-    text: "Rich notes of Damascus rose, golden amber, oud, citrus and lush figs blended with care.",
-  },
-  {
-    icon: Sparkles,
-    title: "Flexible UGX Pricing",
-    text: "From portable pocket attars at UGX 5,000 to bespoke grand flacons up to UGX 200,000.",
-  },
-];
-
-function Features() {
-  return (
-    <section id="why-us" className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-      <div className="reveal grid gap-6 rounded-3xl border border-border bg-card p-10 sm:grid-cols-3 shadow-xl">
-        {FEATURES.map((feature) => (
-          <div key={feature.title} className="text-center p-4">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/40 bg-primary/10 text-primary mb-4">
-              <feature.icon size={24} />
+    <section
+      id="about"
+      className="relative overflow-hidden bg-black/60 py-24 border-t border-border/60"
+    >
+      <div className="mx-auto max-w-6xl px-6 lg:px-10">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          {/* Founder Portrait */}
+          <div className="relative mx-auto w-full max-w-sm">
+            <div className="absolute -inset-3 rounded-3xl border border-[#D4AF37]/30" />
+            <img
+              src="/IMG-20260902-WA0057.jpg"
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (target.src !== floshPortrait && !target.src.endsWith(floshPortrait)) {
+                  target.src = floshPortrait;
+                }
+              }}
+              alt="Flosh, founder of Flosh Scents"
+              width={896}
+              height={1200}
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              className="relative aspect-[3/4] w-full rounded-2xl object-cover object-top shadow-2xl"
+            />
+            <div className="absolute -bottom-3 left-4 rounded-xl bg-black/90 border border-[#D4AF37]/40 px-5 py-2.5 backdrop-blur-md shadow-xl">
+              <p className="font-display text-base font-bold text-[#F3E5AB]">Flosh</p>
+              <p className="text-[10px] tracking-widest text-muted-foreground uppercase">
+                Owner & Founder
+              </p>
             </div>
-            <h3 className="font-display text-xl font-bold">{feature.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{feature.text}</p>
           </div>
-        ))}
+
+          {/* Minimal Luxury Story */}
+          <div className="space-y-5">
+            <div className="inline-flex items-center gap-2 text-xs font-bold tracking-[0.25em] text-[#C5A059] uppercase">
+              <Sparkles size={14} />
+              <span>ABOUT FLOSH SCENTS</span>
+            </div>
+
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-normal text-foreground uppercase leading-tight">
+              Luxury Scents. <br />
+              <span className="gold-text">Confident Presence.</span>
+            </h2>
+
+            <div className="flex items-center gap-2 text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+              <MapPin size={14} className="text-[#D4AF37]" />
+              <span>Kampala, Uganda</span>
+            </div>
+
+            <p className="text-sm sm:text-base leading-relaxed text-muted-foreground/90 font-light">
+              Flosh Scents is a Kampala-born fragrance boutique dedicated to bespoke scent profiles,
+              uncompromising oil concentration, and memorable sillage. Every creation is crafted to
+              elevate confidence and leave an indelible impression.
+            </p>
+
+            {/* Direct Leadership Contacts: SUE (Director) & Flosh (Owner) */}
+            <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* SUE - Director with Rose Flower */}
+              <div className="rounded-2xl border border-rose-500/40 bg-rose-950/20 p-4 backdrop-blur-sm">
+                <div className="flex items-center gap-1.5 text-rose-300 text-xs font-bold tracking-wider uppercase mb-1">
+                  <span>🌹</span>
+                  <span>{SUE_NAME}</span>
+                </div>
+                <p className="text-xs text-rose-200/90 font-medium">{SUE_ROLE}</p>
+                <a
+                  href={`tel:+${SUE_PHONE_NUMBER}`}
+                  className="mt-2 text-sm font-mono font-bold text-white hover:text-rose-300 flex items-center gap-1.5 transition-colors"
+                >
+                  <Phone size={13} className="text-rose-400" />
+                  <span>0760370341</span>
+                </a>
+              </div>
+
+              {/* Flosh - Owner */}
+              <div className="rounded-2xl border border-[#D4AF37]/40 bg-[#D4AF37]/10 p-4 backdrop-blur-sm">
+                <div className="flex items-center gap-1.5 text-[#F3E5AB] text-xs font-bold tracking-wider uppercase mb-1">
+                  <Sparkles size={13} />
+                  <span>{BUSINESS_OWNER}</span>
+                </div>
+                <p className="text-xs text-muted-foreground font-medium">Founder & Perfumer</p>
+                <a
+                  href={`tel:+${WHATSAPP_NUMBER}`}
+                  className="mt-2 text-sm font-mono font-bold text-white hover:text-[#F3E5AB] flex items-center gap-1.5 transition-colors"
+                >
+                  <Phone size={13} className="text-[#D4AF37]" />
+                  <span>{WHATSAPP_DISPLAY}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -445,128 +407,109 @@ function Features() {
 function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-      <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-card p-8 text-center sm:p-14">
+      <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-8 sm:p-12 text-center">
         <img
           src={aboutFlosh}
           alt=""
           aria-hidden="true"
           loading="lazy"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-15"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-10"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-card/90 via-card/85 to-card" />
-        <div className="animate-glow-pulse absolute -top-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
-        <div className="relative">
-          <span className="text-xs font-semibold tracking-[0.3em] text-primary uppercase">
-            Order & Inquire
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/80 via-black/90 to-black" />
+
+        <div className="relative z-10 max-w-2xl mx-auto">
+          <span className="text-xs font-bold tracking-[0.25em] text-[#C5A059] uppercase">
+            CONTACT & ORDERS
           </span>
-          <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-            Connect with <span className="gold-text">Flosh Scents</span>
+          <h2 className="font-display mt-2 text-3xl sm:text-4xl font-normal text-foreground uppercase">
+            CONNECT WITH <span className="gold-text">FLOSH SCENTS</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-lg leading-relaxed text-muted-foreground text-sm sm:text-base">
-            Need a recommendation for a wedding, gift, or everyday signature? Contact our team
-            directly for immediate assistance and swift Kampala delivery.
+          <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
+            Kampala, Uganda • Quick orders, delivery coordination & fragrance advice.
           </p>
 
-          {/* Executive & Leadership Direct Contacts */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
-            {/* SUE - Director of Flosh Scents */}
-            <div className="relative overflow-hidden rounded-3xl border border-rose-500/40 bg-gradient-to-b from-rose-950/30 to-card backdrop-blur-md p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all hover:border-rose-400 hover:shadow-rose-950/50">
-              <div className="absolute top-0 right-0 h-28 w-28 bg-rose-500/10 rounded-full blur-2xl pointer-events-none" />
+          {/* Contact Cards: SUE (Director) & Flosh */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
+            {/* SUE - Director of Flosh Scents with Rose Flower */}
+            <div className="relative overflow-hidden rounded-2xl border border-rose-500/40 bg-gradient-to-b from-rose-950/30 to-black/80 p-5 shadow-lg flex flex-col justify-between">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-rose-500/15 border border-rose-500/30 px-3.5 py-1 text-xs font-bold text-rose-300 tracking-widest uppercase">
-                  <span className="text-base" role="img" aria-label="rose flower">
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/20 border border-rose-500/30 px-3 py-0.5 text-xs font-bold text-rose-300 uppercase">
+                  <span role="img" aria-label="rose flower">
                     🌹
                   </span>
                   <span>{SUE_NAME}</span>
-                  <Flower2 size={13} className="text-rose-400" />
                 </div>
-                <h3 className="font-display mt-3 text-2xl font-bold text-foreground flex items-center gap-2">
+                <h3 className="font-display mt-2 text-xl font-bold text-foreground flex items-center gap-2">
                   <span>{SUE_NAME}</span>
-                  <span className="text-xl" role="img" aria-label="rose flower">
+                  <span role="img" aria-label="rose flower">
                     🌹
                   </span>
                 </h3>
-                <p className="text-xs font-semibold tracking-wider text-rose-300 uppercase mt-0.5">
+                <p className="text-xs font-semibold tracking-wider text-rose-300 uppercase">
                   {SUE_ROLE}
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                  Executive inquiries, VIP client orders, partnerships & customer care.
-                </p>
-                <p className="mt-2 font-mono text-sm font-semibold text-rose-200 flex items-center gap-1.5">
-                  <Phone size={13} className="text-rose-400" />
-                  <span>0760370341</span>
-                </p>
+                <p className="mt-1 text-xs text-muted-foreground font-mono">0760370341</p>
               </div>
 
-              <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
+              <div className="mt-5 flex gap-2">
                 <a
                   href={`https://wa.me/${SUE_PHONE_NUMBER}?text=${encodeURIComponent(
-                    "Hello Sue! 🌹 I am reaching out to you as the Director of Flosh Scents.",
+                    "Hello Sue! 🌹 I am contacting you regarding Flosh Scents.",
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-4 py-3 text-xs font-bold tracking-wider text-white uppercase shadow transition-transform hover:scale-[1.02]"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 px-3 py-2 text-xs font-bold tracking-wider text-white uppercase transition-transform hover:scale-105"
                 >
-                  <MessageCircle size={15} />
+                  <MessageCircle size={14} />
                   <span>WhatsApp SUE</span>
                 </a>
                 <a
                   href={`tel:+${SUE_PHONE_NUMBER}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-rose-400/40 bg-rose-500/10 hover:bg-rose-500/20 px-4 py-3 text-xs font-bold tracking-wider text-rose-200 uppercase transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full border border-rose-400/40 bg-rose-500/10 hover:bg-rose-500/20 px-3.5 py-2 text-xs font-bold tracking-wider text-rose-200 uppercase transition-colors"
                 >
-                  <Phone size={14} />
-                  <span>Call 0760370341</span>
+                  <Phone size={13} />
+                  <span>Call</span>
                 </a>
               </div>
             </div>
 
-            {/* FLOSH - Founder & Perfumer */}
-            <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-primary/5 backdrop-blur-md p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all hover:border-primary/60">
-              <div className="absolute top-0 right-0 h-28 w-28 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+            {/* FLOSH - Owner */}
+            <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/40 bg-gradient-to-b from-[#D4AF37]/10 to-black/80 p-5 shadow-lg flex flex-col justify-between">
               <div>
-                <div className="inline-flex items-center gap-2 rounded-full bg-primary/15 border border-primary/30 px-3.5 py-1 text-xs font-bold text-primary tracking-widest uppercase">
-                  <Sparkles size={13} />
-                  <span>FLOSH</span>
+                <div className="inline-flex items-center gap-1.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/30 px-3 py-0.5 text-xs font-bold text-[#F3E5AB] uppercase">
+                  <Sparkles size={12} />
+                  <span>{BUSINESS_OWNER}</span>
                 </div>
-                <h3 className="font-display mt-3 text-2xl font-bold text-foreground">Flosh</h3>
-                <p className="text-xs font-semibold tracking-wider text-primary uppercase mt-0.5">
-                  Founder & Perfumer
+                <h3 className="font-display mt-2 text-xl font-bold text-foreground">
+                  {BUSINESS_OWNER}
+                </h3>
+                <p className="text-xs font-semibold tracking-wider text-[#C5A059] uppercase">
+                  Owner & Perfumer
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                  Fragrance customization, note layering advice & artisanal blending consultations.
-                </p>
-                <p className="mt-2 font-mono text-sm font-semibold text-primary/90 flex items-center gap-1.5">
-                  <Phone size={13} className="text-primary" />
-                  <span>{WHATSAPP_DISPLAY}</span>
-                </p>
+                <p className="mt-1 text-xs text-muted-foreground font-mono">{WHATSAPP_DISPLAY}</p>
               </div>
 
-              <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
+              <div className="mt-5 flex gap-2">
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                    "Hello Flosh Scents! I'd like to consult on fragrance selection and place an order.",
+                    "Hello Flosh Scents! I would like to place an order.",
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-4 py-3 text-xs font-bold tracking-wider text-white uppercase shadow transition-transform hover:scale-[1.02]"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 px-3 py-2 text-xs font-bold tracking-wider text-white uppercase transition-transform hover:scale-105"
                 >
-                  <MessageCircle size={15} />
+                  <MessageCircle size={14} />
                   <span>WhatsApp Flosh</span>
                 </a>
                 <a
                   href={`tel:+${WHATSAPP_NUMBER}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 hover:bg-primary/20 px-4 py-3 text-xs font-bold tracking-wider text-primary uppercase transition-colors"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 hover:bg-[#D4AF37]/20 px-3.5 py-2 text-xs font-bold tracking-wider text-[#F3E5AB] uppercase transition-colors"
                 >
-                  <Phone size={14} />
-                  <span>Call {WHATSAPP_DISPLAY}</span>
+                  <Phone size={13} />
+                  <span>Call</span>
                 </a>
               </div>
             </div>
-          </div>
-
-          <div className="mt-10 flex items-center justify-center gap-2 text-xs text-muted-foreground font-medium">
-            <MapPin size={15} className="text-primary" />
-            <span>Kampala Delivery · Cash on Delivery & Mobile Money accepted</span>
           </div>
         </div>
       </div>
@@ -574,78 +517,51 @@ function Contact() {
   );
 }
 
-interface FooterProps {
+function Footer({
+  onOpenAdmin,
+  onOpenTrack,
+}: {
   onOpenAdmin: () => void;
   onOpenTrack?: () => void;
-}
-
-function Footer({ onOpenAdmin, onOpenTrack }: FooterProps) {
+}) {
   return (
-    <footer className="border-t border-border bg-background py-14">
-      <div className="mx-auto max-w-7xl px-6 text-center lg:px-10 space-y-6">
-        <p className="font-display text-3xl font-semibold">
-          <span className="gold-text">Flosh</span> Scents
-        </p>
-        <p className="text-sm text-muted-foreground">
-          Luxury Perfumes & Fragrance House · Kampala, Uganda
-        </p>
-
-        {/* Direct Contacts in Footer */}
-        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs text-muted-foreground pt-1">
-          <span className="inline-flex items-center gap-1.5 text-rose-300">
-            <span>🌹</span>
-            <strong className="text-foreground">SUE</strong> ({SUE_ROLE}):{" "}
-            <a
-              href={`tel:+${SUE_PHONE_NUMBER}`}
-              className="hover:underline text-foreground font-mono"
-            >
-              0760 370 341
-            </a>
-          </span>
-          <span className="hidden sm:inline text-border">·</span>
-          <span className="inline-flex items-center gap-1.5 text-primary">
-            <strong className="text-foreground">Flosh</strong> (Founder & Perfumer):{" "}
-            <a
-              href={`tel:+${WHATSAPP_NUMBER}`}
-              className="hover:underline text-foreground font-mono"
-            >
-              {WHATSAPP_DISPLAY}
-            </a>
-          </span>
+    <footer className="border-t border-border/60 bg-black py-12">
+      <div className="mx-auto max-w-7xl px-6 text-center lg:px-10 space-y-4">
+        <div className="flex justify-center">
+          <FloshLogo size="sm" showTagline={false} />
         </div>
 
-        <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider uppercase text-muted-foreground items-center">
-          <a href="#home" className="hover:text-primary transition-colors">
-            Home
-          </a>
-          <a href="#shop" className="hover:text-primary transition-colors">
-            Shop Perfumes
-          </a>
-          <a href="#about" className="hover:text-primary transition-colors">
-            About Flosh
-          </a>
-          <a href="#contact" className="hover:text-primary transition-colors">
-            Contact
-          </a>
+        <p className="text-xs font-semibold tracking-[0.2em] text-[#C5A059] uppercase">
+          {BUSINESS_TAGLINE}
+        </p>
+        <p className="text-xs text-muted-foreground">{BUSINESS_LOCATION}</p>
+
+        {/* Minimal Nav Links */}
+        <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider uppercase text-muted-foreground pt-2">
+          {NAV_LINKS.map((link) => (
+            <a key={link.label} href={link.href} className="hover:text-[#F3E5AB] transition-colors">
+              {link.label}
+            </a>
+          ))}
           {onOpenTrack && (
             <button
               onClick={onOpenTrack}
-              className="hover:text-primary transition-colors flex items-center gap-1 cursor-pointer"
+              className="hover:text-[#F3E5AB] transition-colors flex items-center gap-1 cursor-pointer"
             >
-              <Truck size={12} className="text-primary" /> Track My Order
+              <Truck size={12} className="text-[#D4AF37]" /> Track Order
             </button>
           )}
           <button
             onClick={onOpenAdmin}
-            className="text-primary hover:underline font-bold flex items-center gap-1"
+            className="text-[#D4AF37] hover:underline font-bold flex items-center gap-1"
           >
-            <Shield size={12} /> Flosh Admin Portal
+            <Shield size={12} /> Admin Portal
           </button>
         </div>
 
-        <div className="gold-line mx-auto mt-6 h-px w-32" />
-        <p className="text-xs tracking-widest text-muted-foreground uppercase">
-          © {new Date().getFullYear()} Flosh Scents — All rights reserved · Handcrafted in Kampala
+        <div className="gold-line mx-auto mt-4 h-px w-24" />
+        <p className="text-[11px] tracking-widest text-muted-foreground uppercase">
+          © {new Date().getFullYear()} {BUSINESS_NAME} · {BUSINESS_LOCATION}
         </p>
       </div>
     </footer>
@@ -697,9 +613,11 @@ function Index() {
     setIsTrackOpen(true);
   };
 
-  const handleOrderNowFromModal = (product: Product, quantity: number) => {
+  // Direct Order Now from card: adds selected item and quantity and opens checkout immediately
+  const handleOrderNow = (product: Product, quantity: number = 1) => {
     addToCart(product, quantity);
     setSelectedProduct(null);
+    setIsCartOpen(false);
     setIsCheckoutOpen(true);
   };
 
@@ -713,28 +631,36 @@ function Index() {
         onOpenTrack={handleOpenGeneralTrack}
       />
 
-      {/* Hero with CTA */}
-      <Hero onShopClick={handleShopScroll} onTrackClick={handleOpenGeneralTrack} />
+      {/* Hero Section */}
+      <Hero
+        onShopClick={handleShopScroll}
+        onOrderNowClick={() => {
+          // If cart has items, open checkout directly, otherwise smooth scroll to collection
+          if (cart.length > 0) {
+            setIsCheckoutOpen(true);
+          } else {
+            handleShopScroll();
+          }
+        }}
+      />
 
-      {/* Customer Perfume Shop & Live Inventory Catalog */}
+      {/* Product Collection (THE COLLECTION) */}
       <ShopSection
         products={products}
         onSelectProduct={(p) => setSelectedProduct(p)}
-        onAddToCart={(p) => addToCart(p, 1)}
+        onAddToCart={(p, qty) => addToCart(p, qty || 1)}
+        onOrderNow={handleOrderNow}
         onOpenAdmin={() => setIsAdminOpen(true)}
         onOpenTrack={(id) => (id ? openTrackingWithOrder(id) : handleOpenGeneralTrack())}
       />
 
-      {/* About Flosh Section (preserves exact requested photo) */}
+      {/* Minimal About Section */}
       <About />
 
-      {/* Why Flosh Scents Features */}
-      <Features />
-
-      {/* Contact & Direct Ordering */}
+      {/* Minimal Contact Section */}
       <Contact />
 
-      {/* Footer */}
+      {/* Minimal Footer */}
       <Footer onOpenAdmin={() => setIsAdminOpen(true)} onOpenTrack={handleOpenGeneralTrack} />
 
       {/* Product Details Modal */}
@@ -746,10 +672,10 @@ function Index() {
           addToCart(product, qty);
           setSelectedProduct(null);
         }}
-        onOrderNow={handleOrderNowFromModal}
+        onOrderNow={handleOrderNow}
       />
 
-      {/* Slide-in Shopping Cart Drawer */}
+      {/* Shopping Cart Drawer */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -764,7 +690,7 @@ function Index() {
         }}
       />
 
-      {/* Checkout & Order Confirmation Modal */}
+      {/* Checkout & Instant Order Modal */}
       <CheckoutModal
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
@@ -776,7 +702,7 @@ function Index() {
         onTrackOrder={(orderId) => openTrackingWithOrder(orderId)}
       />
 
-      {/* Customer 'Track My Order' Live Status Modal */}
+      {/* Order Tracking Modal */}
       <TrackOrderModal
         isOpen={isTrackOpen}
         onClose={() => setIsTrackOpen(false)}
@@ -785,7 +711,7 @@ function Index() {
         onShopClick={handleShopScroll}
       />
 
-      {/* Flosh Admin Dashboard: Products, Stock & Customer Orders */}
+      {/* Owner Admin Portal */}
       <AdminDashboard
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}

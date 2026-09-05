@@ -1,7 +1,22 @@
-export type PerfumeType = "Spray Perfume" | "Oil Perfume";
+export type PerfumeType =
+  | "Spray Perfume"
+  | "Oil Perfume"
+  | "Eau de Parfum"
+  | "Eau de Toilette"
+  | "Fragrance / EDT"
+  | "Fruity fragrance"
+  | "Fragrance";
 
 export type ProductCategory =
-  "Spray Perfumes" | "Oil Perfumes" | "Designer Inspired" | "Body Mists" | "Gift Sets";
+  | "Spray Perfumes"
+  | "Oil Perfumes"
+  | "Designer Inspired"
+  | "Body Mists"
+  | "Gift Sets"
+  | "Men's"
+  | "Women's"
+  | "Unisex"
+  | "Fruity";
 
 export type ProductTag =
   "Best Seller" | "New Arrival" | "Affordable" | "Signature" | "Premium" | "Gift";
@@ -27,6 +42,8 @@ export interface Product {
   tag: ProductTag;
   isAvailable: boolean;
   createdAt: number;
+  gender?: "Men's" | "Women's" | "Unisex";
+  scentProfile?: string;
   custom?: boolean;
 }
 

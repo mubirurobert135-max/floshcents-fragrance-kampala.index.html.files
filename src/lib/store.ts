@@ -11,6 +11,18 @@ import midnightEssence from "@/assets/midnight-essence.jpg";
 import natureSpirit from "@/assets/nature-spirit.jpg";
 import heroPerfume from "@/assets/hero-perfume.jpg";
 import barakkatRouge from "@/assets/barakkat-rouge-540.jpg";
+import liquidBrun from "@/assets/liquid-brun.jpg";
+import vip212 from "@/assets/vip-212.jpg";
+import luckyBillion from "@/assets/lucky-billion.jpg";
+import blackOpens from "@/assets/black-opens.jpg";
+import fruityCollection from "@/assets/fruity-collection.jpg";
+import floshScentsLogo from "@/assets/flosh-scents-logo.jpg";
+
+export const BUSINESS_NAME = "FLOSH SCENTS";
+export const BUSINESS_OWNER = "Flosh";
+export const BUSINESS_LOCATION = "Kampala, Uganda";
+export const BUSINESS_TAGLINE = "SCENT OF CONFIDENCE • ESSENCE OF LUXURY";
+export const FLOSH_LOGO = floshScentsLogo;
 
 export const WHATSAPP_NUMBER = "256753325780";
 export const WHATSAPP_DISPLAY = "0753 325 780";
@@ -26,10 +38,217 @@ export const formatUGX = (amount: number): string => {
 
 export const INITIAL_PRODUCTS: Product[] = [
   {
+    id: "fc-prod-liquidbrun",
+    name: "Liquid Brun",
+    type: "Eau de Parfum",
+    category: "Unisex",
+    gender: "Unisex",
+    size: "100ml",
+    price: 200000,
+    stock: 15,
+    description:
+      "A warm woody and amber-vanilla fragrance with a rich, sophisticated character. It opens with cinnamon, orange blossom, cardamom and bergamot, develops into vanilla and elemi, and settles into praline, musk, ambroxan and guaiac wood.",
+    notes: {
+      top: "Cinnamon, Orange Blossom, Cardamom & Bergamot",
+      middle: "Bourbon Vanilla & Elemi Resin",
+      base: "Praline, Musk, Ambroxan & Guaiac Wood",
+    },
+    displayNotes: "Cinnamon · Bourbon Vanilla · Praline · Guaiac Wood",
+    scentProfile: "Warm Woody, Amber Vanilla, Praline",
+    image: liquidBrun,
+    tag: "Signature",
+    isAvailable: true,
+    createdAt: 1710000030000,
+  },
+  {
+    id: "fc-prod-212",
+    name: "212 VIP – Are You On The List?",
+    type: "Fragrance / EDT",
+    category: "Women's",
+    gender: "Women's",
+    size: "30ml",
+    price: 60000,
+    stock: 18,
+    description:
+      "A glamorous and energetic fragrance with a fruity, sweet and sensual character. It combines rum and passion fruit with a soft heart of gardenia and musk, finishing with vanilla and tonka bean.",
+    notes: {
+      top: "Rum Accord & Exotic Passion Fruit",
+      middle: "Velvety Gardenia & Sensual Musk",
+      base: "Warm Vanilla & Roasted Tonka Bean",
+    },
+    displayNotes: "Rum · Passion Fruit · Gardenia · Vanilla",
+    scentProfile: "Fruity, Sweet, Sensual",
+    image: vip212,
+    tag: "Signature",
+    isAvailable: true,
+    createdAt: 1710000029000,
+  },
+  {
+    id: "fc-prod-lucky",
+    name: "Lucky Billion",
+    type: "Eau de Toilette",
+    category: "Men's",
+    gender: "Men's",
+    size: "30ml",
+    price: 30000,
+    stock: 22,
+    description:
+      "A sweet, fruity and confident fragrance with a warm woody character, suitable for everyday wear and social occasions.",
+    notes: {
+      top: "Green Plum, Grapefruit & Bergamot",
+      middle: "Hazelnut, Honey Accord & Orange Blossom",
+      base: "Cedarwood, Patchouli & Amberwood",
+    },
+    displayNotes: "Citrus · Honey Accord · Hazelnut · Cedarwood",
+    scentProfile: "Citrus, Fruity, Honey, Sweet, Woody",
+    image: luckyBillion,
+    tag: "Best Seller",
+    isAvailable: true,
+    createdAt: 1710000028000,
+  },
+  {
+    id: "fc-prod-blackopens",
+    name: "Black Opens",
+    type: "Fragrance",
+    category: "Men's",
+    gender: "Men's",
+    size: "30ml",
+    price: 30000,
+    stock: 20,
+    description:
+      "A bold dark fragrance designed for customers who prefer a confident, sophisticated and memorable scent.",
+    notes: {
+      top: "Black Coffee & Crushed Pink Pepper",
+      middle: "Bitter Almond & Spiced Florals",
+      base: "Smoky Cedar, Dark Leather & Rich Amber",
+    },
+    displayNotes: "Black Coffee · Pink Pepper · Cedar · Rich Amber",
+    scentProfile: "Dark, Woody, Spicy, Confident",
+    image: blackOpens,
+    tag: "Best Seller",
+    isAvailable: true,
+    createdAt: 1710000027000,
+  },
+  {
+    id: "fc-prod-tangelo",
+    name: "Tangelo",
+    type: "Fruity fragrance",
+    category: "Unisex",
+    gender: "Unisex",
+    size: "100ml",
+    price: 20000,
+    stock: 28,
+    description:
+      "A bright, fresh fruity fragrance with a playful character, ideal for casual everyday use.",
+    notes: {
+      top: "Sweet Tangelo Citrus & Mandarin Nectar",
+      middle: "Sunlit Peach & Crisp White Blossom",
+      base: "Sheer Amber & Gentle Clean Musk",
+    },
+    displayNotes: "Tangelo Citrus · Mandarin · White Peach · Sheer Musk",
+    scentProfile: "Citrus, Fruity, Fresh",
+    image: fruityCollection,
+    tag: "Affordable",
+    isAvailable: true,
+    createdAt: 1710000026000,
+  },
+  {
+    id: "fc-prod-banana",
+    name: "Banana Fizz",
+    type: "Fruity fragrance",
+    category: "Unisex",
+    gender: "Unisex",
+    size: "100ml",
+    price: 20000,
+    stock: 25,
+    description:
+      "A fun, sweet and fruity fragrance designed for customers who enjoy playful tropical-inspired scents.",
+    notes: {
+      top: "Candied Banana & Sparkling Soda Fizz",
+      middle: "Tropical Mango & Coconut Flower",
+      base: "Whipped Vanilla & Golden Sugar",
+    },
+    displayNotes: "Candied Banana · Soda Fizz · Tropical Fruit · Vanilla",
+    scentProfile: "Sweet, Fruity, Tropical",
+    image: fruityCollection,
+    tag: "Affordable",
+    isAvailable: true,
+    createdAt: 1710000025000,
+  },
+  {
+    id: "fc-prod-blazberry",
+    name: "Blazberry",
+    type: "Fruity fragrance",
+    category: "Unisex",
+    gender: "Unisex",
+    size: "100ml",
+    price: 20000,
+    stock: 30,
+    description:
+      "A vibrant berry-inspired fragrance with a youthful, fruity and refreshing character.",
+    notes: {
+      top: "Wild Mountain Berries & Blackcurrant",
+      middle: "Raspberry Nectar & Violet Petals",
+      base: "Frosted Cedar & Dewy Musk",
+    },
+    displayNotes: "Wild Blackberry · Blackcurrant · Raspberry Nectar",
+    scentProfile: "Berry, Fruity, Refreshing",
+    image: fruityCollection,
+    tag: "Affordable",
+    isAvailable: true,
+    createdAt: 1710000024000,
+  },
+  {
+    id: "fc-prod-plumdrop",
+    name: "Plum Drop",
+    type: "Fruity fragrance",
+    category: "Unisex",
+    gender: "Unisex",
+    size: "100ml",
+    price: 20000,
+    stock: 24,
+    description:
+      "A sweet fruity fragrance with a juicy plum-inspired character and a smooth, playful finish.",
+    notes: {
+      top: "Juicy Damson Plum & Spiced Star Anise",
+      middle: "Black Cherry & Sugar Blossom",
+      base: "Cashmere Musk & Smooth Tonka Bean",
+    },
+    displayNotes: "Dark Plum · Black Cherry · Cashmere Musk · Tonka",
+    scentProfile: "Juicy Plum, Sweet, Smooth",
+    image: fruityCollection,
+    tag: "Affordable",
+    isAvailable: true,
+    createdAt: 1710000023000,
+  },
+  {
+    id: "fc-prod-icedcherry",
+    name: "Iced Cherry",
+    type: "Fruity fragrance",
+    category: "Unisex",
+    gender: "Unisex",
+    size: "100ml",
+    price: 20000,
+    stock: 28,
+    description: "A cool, sweet cherry-inspired fragrance with a fun and refreshing character.",
+    notes: {
+      top: "Frosty Maraschino Cherry & Glacial Mint",
+      middle: "Crushed Red Berries & Cherry Blossom",
+      base: "Sweet Vanilla Cream & Frosted Woods",
+    },
+    displayNotes: "Frosty Cherry · Glacial Mint · Red Berries · Vanilla",
+    scentProfile: "Cool Cherry, Sweet, Refreshing",
+    image: fruityCollection,
+    tag: "Affordable",
+    isAvailable: true,
+    createdAt: 1710000022000,
+  },
+  {
     id: "fc-prod-540",
     name: "Barakkat Rouge 540 Extrait de Parfum",
     type: "Spray Perfume",
     category: "Designer Inspired",
+    gender: "Unisex",
     size: "100ml extrait de parfum",
     price: 140000,
     stock: 24,
@@ -41,6 +260,7 @@ export const INITIAL_PRODUCTS: Product[] = [
       base: "Sensual Ambergris, Fir Balsam & Woody Musk",
     },
     displayNotes: "Saffron · Bitter Almond · Ambergris · Jasmine",
+    scentProfile: "Amber Floral, Warm Saffron, Woody",
     image: barakkatRouge,
     tag: "Signature",
     isAvailable: true,
@@ -418,23 +638,48 @@ export function getStoredProducts(): Product[] {
       return INITIAL_PRODUCTS;
     }
 
-    // Ensure Barakkat Rouge 540 Extrait de Parfum is always published and in stock
-    const barakkatInStorage = parsed.find(
-      (p) =>
-        p.id === "fc-prod-540" ||
-        p.name.toLowerCase().includes("barakkat") ||
-        p.name.toLowerCase().includes("540"),
-    );
+    // Ensure all official Flosh Scents flagship products are present and up to date
+    const officialIds = [
+      "fc-prod-liquidbrun",
+      "fc-prod-212",
+      "fc-prod-lucky",
+      "fc-prod-blackopens",
+      "fc-prod-tangelo",
+      "fc-prod-banana",
+      "fc-prod-blazberry",
+      "fc-prod-plumdrop",
+      "fc-prod-icedcherry",
+      "fc-prod-540",
+    ];
 
-    const barakkatInitial = INITIAL_PRODUCTS.find((p) => p.id === "fc-prod-540")!;
-    if (!barakkatInStorage) {
-      parsed = [barakkatInitial, ...parsed];
-      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(parsed));
-    } else if (!barakkatInStorage.image || barakkatInStorage.stock <= 0) {
-      // Refresh image and stock if it was unconfigured
-      barakkatInStorage.image = barakkatRouge;
-      if (barakkatInStorage.stock <= 0) barakkatInStorage.stock = 24;
-      barakkatInStorage.isAvailable = true;
+    let updated = false;
+    for (const officialId of officialIds) {
+      const initialItem = INITIAL_PRODUCTS.find((p) => p.id === officialId);
+      if (!initialItem) continue;
+
+      const existingIndex = parsed.findIndex((p) => p.id === officialId);
+      if (existingIndex === -1) {
+        parsed = [initialItem, ...parsed];
+        updated = true;
+      } else {
+        // Keep stock level but ensure updated metadata, category, gender and photo
+        const existing = parsed[existingIndex];
+        if (
+          !existing.image ||
+          existing.price !== initialItem.price ||
+          !existing.gender ||
+          existing.type !== initialItem.type
+        ) {
+          parsed[existingIndex] = {
+            ...initialItem,
+            stock: existing.stock > 0 ? existing.stock : initialItem.stock,
+          };
+          updated = true;
+        }
+      }
+    }
+
+    if (updated) {
       localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(parsed));
     }
 
