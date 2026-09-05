@@ -10,6 +10,7 @@ import royalBloom from "@/assets/royal-bloom.jpg";
 import midnightEssence from "@/assets/midnight-essence.jpg";
 import natureSpirit from "@/assets/nature-spirit.jpg";
 import heroPerfume from "@/assets/hero-perfume.jpg";
+import barakkatRouge from "@/assets/barakkat-rouge-540.jpg";
 
 export const WHATSAPP_NUMBER = "256753325780";
 export const WHATSAPP_DISPLAY = "0753 325 780";
@@ -19,6 +20,27 @@ export const formatUGX = (amount: number): string => {
 };
 
 export const INITIAL_PRODUCTS: Product[] = [
+  {
+    id: "fc-prod-540",
+    name: "Barakkat Rouge 540 Extrait de Parfum",
+    type: "Spray Perfume",
+    category: "Designer Inspired",
+    size: "100ml extrait de parfum",
+    price: 140000,
+    stock: 24,
+    description:
+      "An opulent, intense amber floral masterpiece housed in an iconic ruby-red crystal flacon with a polished gold crown cap and architectural presentation box. Barakkat Rouge 540 delivers a radiant opening of Grandiflorum jasmine and fiery saffron, interwoven with Moroccan bitter almond, aristocratic cedarwood, and an unforgettable, magnetic ambergris sillage.",
+    notes: {
+      top: "Egyptian Jasmine Grandiflorum, Saffron & Bitter Almond",
+      middle: "Cedarwood, Warm Amberwood & Spiced Florals",
+      base: "Sensual Ambergris, Fir Balsam & Woody Musk",
+    },
+    displayNotes: "Saffron · Bitter Almond · Ambergris · Jasmine",
+    image: barakkatRouge,
+    tag: "Signature",
+    isAvailable: true,
+    createdAt: 1710000010000,
+  },
   {
     id: "fc-prod-001",
     name: "Pocket Attar Mini",
@@ -385,11 +407,32 @@ export function getStoredProducts(): Product[] {
       localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(INITIAL_PRODUCTS));
       return INITIAL_PRODUCTS;
     }
-    const parsed = JSON.parse(data) as Product[];
+    let parsed = JSON.parse(data) as Product[];
     if (!Array.isArray(parsed) || parsed.length === 0) {
       localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(INITIAL_PRODUCTS));
       return INITIAL_PRODUCTS;
     }
+
+    // Ensure Barakkat Rouge 540 Extrait de Parfum is always published and in stock
+    const barakkatInStorage = parsed.find(
+      (p) =>
+        p.id === "fc-prod-540" ||
+        p.name.toLowerCase().includes("barakkat") ||
+        p.name.toLowerCase().includes("540"),
+    );
+
+    const barakkatInitial = INITIAL_PRODUCTS.find((p) => p.id === "fc-prod-540")!;
+    if (!barakkatInStorage) {
+      parsed = [barakkatInitial, ...parsed];
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(parsed));
+    } else if (!barakkatInStorage.image || barakkatInStorage.stock <= 0) {
+      // Refresh image and stock if it was unconfigured
+      barakkatInStorage.image = barakkatRouge;
+      if (barakkatInStorage.stock <= 0) barakkatInStorage.stock = 24;
+      barakkatInStorage.isAvailable = true;
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(parsed));
+    }
+
     return parsed;
   } catch {
     return INITIAL_PRODUCTS;
@@ -435,7 +478,7 @@ export function saveProduct(
     stock,
     description:
       productInput.description?.trim() ||
-      "A distinguished luxury fragrance blended by Flosh Cents in Kampala.",
+      "A distinguished luxury fragrance blended by Flosh Scents in Kampala.",
     notes: {
       top: topNote,
       middle: midNote,
@@ -614,7 +657,7 @@ export function formatWhatsAppOrderMessage(order: Order): string {
     )
     .join("\n");
 
-  return `✨ *FLOSH CENTS — ORDER CONFIRMATION* ✨
+  return `✨ *FLOSH SCENTS — ORDER CONFIRMATION* ✨
 ━━━━━━━━━━━━━━━━━━━━
 📦 *Order ID:* #${order.id}
 👤 *Customer:* ${order.customerName}
@@ -626,7 +669,7 @@ ${itemsText}
 
 💰 *TOTAL AMOUNT:* ${formatUGX(order.totalAmount)}
 ━━━━━━━━━━━━━━━━━━━━
-Hello Flosh! I just placed this order on the Flosh Cents website. Please confirm availability and delivery time in Kampala. Thank you!`;
+Hello Flosh! I just placed this order on the Flosh Scents website. Please confirm availability and delivery time in Kampala. Thank you!`;
 }
 
 export function generateDirectWhatsAppLink(order: Order): string {

@@ -35,13 +35,13 @@ import { Product } from "../types/store";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Flosh Cents | Luxury Perfumes & Online Shop Kampala" },
+      { title: "Flosh Scents | Luxury Perfumes & Online Shop Kampala" },
       {
         name: "description",
         content:
-          "Flosh Cents is a luxury fragrance house in Kampala, Uganda offering premium oil perfumes, spray perfumes, live stock management, and online ordering.",
+          "Flosh Scents is a luxury fragrance house in Kampala, Uganda offering premium oil perfumes, spray perfumes, live stock management, and online ordering.",
       },
-      { property: "og:title", content: "Flosh Cents | Luxury Perfumes & Online Shop Kampala" },
+      { property: "og:title", content: "Flosh Scents | Luxury Perfumes & Online Shop Kampala" },
       {
         property: "og:description",
         content:
@@ -111,7 +111,7 @@ function Header({ cartCount, onOpenCart, onOpenAdmin, onOpenTrack }: HeaderProps
           href="#home"
           className="flex items-center gap-2 font-display text-2xl font-bold tracking-wide"
         >
-          <span className="gold-text">Flosh</span> <span className="text-foreground">Cents</span>
+          <span className="gold-text">Flosh</span> <span className="text-foreground">Scents</span>
           <span className="hidden sm:inline-block rounded-full bg-primary/15 border border-primary/30 px-2 py-0.5 text-[10px] font-bold text-primary tracking-widest uppercase">
             Kampala
           </span>
@@ -238,7 +238,7 @@ function Hero({
     <section id="home" className="relative flex min-h-[92vh] items-center overflow-hidden">
       <img
         src={heroPerfume}
-        alt="Flosh Cents luxury amber perfume bottle glowing against a dark green backdrop"
+        alt="Flosh Scents luxury amber perfume bottle glowing against a dark green backdrop"
         width={1920}
         height={1080}
         className="absolute inset-0 h-full w-full object-cover"
@@ -277,7 +277,7 @@ function Hero({
 
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                "Hello Flosh! I'm visiting the Flosh Cents store and would like to order a fragrance.",
+                "Hello Flosh! I'm visiting the Flosh Scents store and would like to order a fragrance.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -347,7 +347,7 @@ function About() {
                 target.src = floshPortrait;
               }
             }}
-            alt="Flosh, founder and perfumer of Flosh Cents, smiling in a sunlit botanical garden in Kampala"
+            alt="Flosh, founder and perfumer of Flosh Scents, smiling in a sunlit botanical garden in Kampala"
             width={896}
             height={1200}
             loading="lazy"
@@ -367,10 +367,10 @@ function About() {
             Our Story
           </span>
           <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-            About <span className="gold-text">Flosh Cents</span>
+            About <span className="gold-text">Flosh Scents</span>
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-            Flosh Cents is a luxury fragrance house based in Kampala, Uganda. Founded by Flosh, our
+            Flosh Scents is a luxury fragrance house based in Kampala, Uganda. Founded by Flosh, our
             mission is to craft evocative scents that express personality, confidence and
             unforgettable memories.
           </p>
@@ -461,7 +461,7 @@ function Contact() {
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                "Hello Flosh Cents! I'd like to consult on fragrance selection and place an order.",
+                "Hello Flosh Scents! I'd like to consult on fragrance selection and place an order.",
               )}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -499,7 +499,7 @@ function Footer({ onOpenAdmin, onOpenTrack }: FooterProps) {
     <footer className="border-t border-border bg-background py-14">
       <div className="mx-auto max-w-7xl px-6 text-center lg:px-10 space-y-6">
         <p className="font-display text-3xl font-semibold">
-          <span className="gold-text">Flosh</span> Cents
+          <span className="gold-text">Flosh</span> Scents
         </p>
         <p className="text-sm text-muted-foreground">
           Luxury Perfumes & Fragrance House · Kampala, Uganda
@@ -536,7 +536,7 @@ function Footer({ onOpenAdmin, onOpenTrack }: FooterProps) {
 
         <div className="gold-line mx-auto mt-6 h-px w-32" />
         <p className="text-xs tracking-widest text-muted-foreground uppercase">
-          © {new Date().getFullYear()} Flosh Cents — All rights reserved · Handcrafted in Kampala
+          © {new Date().getFullYear()} Flosh Scents — All rights reserved · Handcrafted in Kampala
         </p>
       </div>
     </footer>
@@ -619,7 +619,7 @@ function Index() {
       {/* About Flosh Section (preserves exact requested photo) */}
       <About />
 
-      {/* Why Flosh Cents Features */}
+      {/* Why Flosh Scents Features */}
       <Features />
 
       {/* Contact & Direct Ordering */}

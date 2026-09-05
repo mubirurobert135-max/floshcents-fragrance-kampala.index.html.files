@@ -40,7 +40,7 @@
 
 :root {
   --radius: 0.75rem;
-  /* Flosh Cents — dark botanical luxury with champagne gold */
+  /* Flosh Scents — dark botanical luxury with champagne gold */
   --background: oklch(0.13 0.012 155);
   --foreground: oklch(0.94 0.01 90);
   --card: oklch(0.17 0.015 155);

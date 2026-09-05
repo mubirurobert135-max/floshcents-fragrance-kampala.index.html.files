@@ -147,7 +147,7 @@ export function CheckoutModal({
               <h3 className="font-display text-2xl font-semibold tracking-wide">
                 {orderSuccess ? "Order Confirmation" : "Complete Your Order"}
               </h3>
-              <p className="text-xs text-muted-foreground">Flosh Cents · Kampala, Uganda</p>
+              <p className="text-xs text-muted-foreground">Flosh Scents · Kampala, Uganda</p>
             </div>
           </div>
 

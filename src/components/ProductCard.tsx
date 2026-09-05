@@ -14,7 +14,7 @@ export function ProductCard({ product, onSelect, onAddToCart }: ProductCardProps
 
   const handleWhatsAppQuick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const msg = `Hello Flosh Cents! I'd like to ask about / order *${product.name}* (${product.type}, ${product.size}) — ${formatUGX(product.price)}.`;
+    const msg = `Hello Flosh Scents! I'd like to ask about / order *${product.name}* (${product.type}, ${product.size}) — ${formatUGX(product.price)}.`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -27,7 +27,7 @@ export function ProductCard({ product, onSelect, onAddToCart }: ProductCardProps
       <div className="relative overflow-hidden bg-background/50">
         <img
           src={product.image}
-          alt={`${product.name} perfume bottle by Flosh Cents`}
+          alt={`${product.name} perfume bottle by Flosh Scents`}
           width={600}
           height={750}
           loading="lazy"

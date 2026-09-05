@@ -53,7 +53,7 @@ export function ProductDetailModal({
   };
 
   const handleWhatsApp = () => {
-    const msg = `Hello Flosh Cents! I'm inquiring about *${product.name}* (${product.type}, ${product.size}) — ${formatUGX(product.price)}. Is it available for delivery in Kampala?`;
+    const msg = `Hello Flosh Scents! I'm inquiring about *${product.name}* (${product.type}, ${product.size}) — ${formatUGX(product.price)}. Is it available for delivery in Kampala?`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 

@@ -34,6 +34,7 @@ import royalBloom from "@/assets/royal-bloom.jpg";
 import midnightEssence from "@/assets/midnight-essence.jpg";
 import natureSpirit from "@/assets/nature-spirit.jpg";
 import heroPerfume from "@/assets/hero-perfume.jpg";
+import barakkatRouge from "@/assets/barakkat-rouge-540.jpg";
 
 interface AdminDashboardProps {
   isOpen: boolean;
@@ -47,6 +48,7 @@ interface AdminDashboardProps {
 }
 
 const PRESET_IMAGES = [
+  { label: "Barakkat Rouge 540 (Ruby Extrait)", src: barakkatRouge },
   { label: "Royal Bloom (Amber Rose)", src: royalBloom },
   { label: "Midnight Essence (Noir Oud)", src: midnightEssence },
   { label: "Nature Spirit (Botanical)", src: natureSpirit },
@@ -169,7 +171,7 @@ export function AdminDashboard({
       size: formSize.trim() || (formType === "Oil Perfume" ? "6ml" : "100ml"),
       price: priceNum,
       stock: stockNum,
-      description: formDescription.trim() || "Handcrafted luxury fragrance by Flosh Cents.",
+      description: formDescription.trim() || "Handcrafted luxury fragrance by Flosh Scents.",
       notes: {
         top: formTopNotes.trim() || "Fresh Notes",
         middle: formMiddleNotes.trim() || "Floral Blend",
@@ -262,7 +264,7 @@ export function AdminDashboard({
             </div>
             <h3 className="font-display text-3xl font-bold">Owner Access Required</h3>
             <p className="mt-2 text-sm text-muted-foreground max-w-sm">
-              Please enter the owner passcode to access Flosh Cents stock management and customer
+              Please enter the owner passcode to access Flosh Scents stock management and customer
               orders.
             </p>
 
@@ -654,7 +656,7 @@ export function AdminDashboard({
                               </a>
                               <a
                                 href={`https://wa.me/${order.phoneNumber.replace(/[^\d]/g, "")}?text=${encodeURIComponent(
-                                  `Hello ${order.customerName}! This is Flosh from Flosh Cents regarding your order #${order.id}.`,
+                                  `Hello ${order.customerName}! This is Flosh from Flosh Scents regarding your order #${order.id}.`,
                                 )}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
@@ -931,7 +933,7 @@ export function AdminDashboard({
                         onChange={handleImageUpload}
                       />
                       <span className="text-[11px] text-muted-foreground block">
-                        Or pick from Flosh Cents luxury bottle designs:
+                        Or pick from Flosh Scents luxury bottle designs:
                       </span>
                     </div>
                   </div>

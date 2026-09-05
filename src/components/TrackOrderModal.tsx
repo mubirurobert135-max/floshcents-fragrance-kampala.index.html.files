@@ -44,7 +44,7 @@ const STEP_DEFINITIONS: {
   {
     status: "Pending",
     title: "Order Placed",
-    description: "Received by Flosh Cents & entered in queue",
+    description: "Received by Flosh Scents & entered in queue",
     icon: Clock,
   },
   {
@@ -138,7 +138,7 @@ export function TrackOrderModal({
   const activeStepIdx = currentOrder ? getStepIndex(currentOrder.status) : -1;
 
   const generateWhatsAppInquiryUrl = (order: Order) => {
-    const text = `Hello Flosh! 👋\nI am tracking my Flosh Cents order *#${order.id}* placed for *${order.customerName}*.\nDelivery destination: ${order.deliveryLocation}.\nTotal: ${formatUGX(order.totalAmount)}.\nCould you please share a quick update on delivery in Kampala? Thank you!`;
+    const text = `Hello Flosh! 👋\nI am tracking my Flosh Scents order *#${order.id}* placed for *${order.customerName}*.\nDelivery destination: ${order.deliveryLocation}.\nTotal: ${formatUGX(order.totalAmount)}.\nCould you please share a quick update on delivery in Kampala? Thank you!`;
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
   };
 
@@ -531,7 +531,7 @@ export function TrackOrderModal({
               </div>
               <div className="max-w-md mx-auto">
                 <h3 className="text-base font-bold text-foreground">
-                  Track Your Flosh Cents Fragrance
+                  Track Your Flosh Scents Fragrance
                 </h3>
                 <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">
                   Every order placed receives a unique number like{" "}
