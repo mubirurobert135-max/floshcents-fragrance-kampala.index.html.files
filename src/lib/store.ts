@@ -15,6 +15,11 @@ import barakkatRouge from "@/assets/barakkat-rouge-540.jpg";
 export const WHATSAPP_NUMBER = "256753325780";
 export const WHATSAPP_DISPLAY = "0753 325 780";
 
+export const SUE_PHONE_NUMBER = "256760370341";
+export const SUE_PHONE_DISPLAY = "0760 370 341";
+export const SUE_NAME = "SUE";
+export const SUE_ROLE = "Director of Flosh Scents";
+
 export const formatUGX = (amount: number): string => {
   return `UGX ${Math.round(amount).toLocaleString("en-UG")}`;
 };

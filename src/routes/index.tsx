@@ -17,6 +17,7 @@ import {
   Truck,
   Droplets,
   Package,
+  Flower2,
 } from "lucide-react";
 import heroPerfume from "@/assets/hero-perfume.jpg";
 import aboutFlosh from "@/assets/about-flosh.jpg";
@@ -29,7 +30,15 @@ import { CartDrawer } from "../components/CartDrawer";
 import { CheckoutModal } from "../components/CheckoutModal";
 import { AdminDashboard } from "../components/AdminDashboard";
 import { TrackOrderModal } from "../components/TrackOrderModal";
-import { WHATSAPP_NUMBER, WHATSAPP_DISPLAY, formatUGX } from "../lib/store";
+import {
+  WHATSAPP_NUMBER,
+  WHATSAPP_DISPLAY,
+  SUE_PHONE_NUMBER,
+  SUE_PHONE_DISPLAY,
+  SUE_NAME,
+  SUE_ROLE,
+  formatUGX,
+} from "../lib/store";
 import { Product } from "../types/store";
 
 export const Route = createFileRoute("/")({
@@ -436,7 +445,7 @@ function Features() {
 function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-      <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-card p-10 text-center sm:p-16">
+      <div className="reveal relative overflow-hidden rounded-3xl border border-border bg-card p-8 text-center sm:p-14">
         <img
           src={aboutFlosh}
           alt=""
@@ -451,35 +460,111 @@ function Contact() {
             Order & Inquire
           </span>
           <h2 className="font-display mt-3 text-4xl font-medium sm:text-5xl">
-            Connect Directly with <span className="gold-text">Flosh</span>
+            Connect with <span className="gold-text">Flosh Scents</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-md leading-relaxed text-muted-foreground text-sm sm:text-base">
-            Need a recommendation for a wedding, gift, or everyday signature? Message Flosh directly
-            on WhatsApp for immediate assistance and swift Kampala delivery.
+          <p className="mx-auto mt-4 max-w-lg leading-relaxed text-muted-foreground text-sm sm:text-base">
+            Need a recommendation for a wedding, gift, or everyday signature? Contact our team
+            directly for immediate assistance and swift Kampala delivery.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-                "Hello Flosh Scents! I'd like to consult on fragrance selection and place an order.",
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-8 py-4 text-xs font-bold tracking-widest text-white uppercase shadow-lg transition-transform hover:scale-105"
-            >
-              <MessageCircle size={18} />
-              WhatsApp Flosh ({WHATSAPP_DISPLAY})
-            </a>
-            <a
-              href={`tel:+${WHATSAPP_NUMBER}`}
-              className="inline-flex items-center gap-2 rounded-full border border-primary/40 px-8 py-4 text-xs font-bold tracking-widest text-primary uppercase transition-colors hover:bg-primary/10"
-            >
-              <Phone size={16} />
-              Call {WHATSAPP_DISPLAY}
-            </a>
+          {/* Executive & Leadership Direct Contacts */}
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
+            {/* SUE - Director of Flosh Scents */}
+            <div className="relative overflow-hidden rounded-3xl border border-rose-500/40 bg-gradient-to-b from-rose-950/30 to-card backdrop-blur-md p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all hover:border-rose-400 hover:shadow-rose-950/50">
+              <div className="absolute top-0 right-0 h-28 w-28 bg-rose-500/10 rounded-full blur-2xl pointer-events-none" />
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-rose-500/15 border border-rose-500/30 px-3.5 py-1 text-xs font-bold text-rose-300 tracking-widest uppercase">
+                  <span className="text-base" role="img" aria-label="rose flower">
+                    🌹
+                  </span>
+                  <span>{SUE_NAME}</span>
+                  <Flower2 size={13} className="text-rose-400" />
+                </div>
+                <h3 className="font-display mt-3 text-2xl font-bold text-foreground flex items-center gap-2">
+                  <span>{SUE_NAME}</span>
+                  <span className="text-xl" role="img" aria-label="rose flower">
+                    🌹
+                  </span>
+                </h3>
+                <p className="text-xs font-semibold tracking-wider text-rose-300 uppercase mt-0.5">
+                  {SUE_ROLE}
+                </p>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Executive inquiries, VIP client orders, partnerships & customer care.
+                </p>
+                <p className="mt-2 font-mono text-sm font-semibold text-rose-200 flex items-center gap-1.5">
+                  <Phone size={13} className="text-rose-400" />
+                  <span>0760370341</span>
+                </p>
+              </div>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
+                <a
+                  href={`https://wa.me/${SUE_PHONE_NUMBER}?text=${encodeURIComponent(
+                    "Hello Sue! 🌹 I am reaching out to you as the Director of Flosh Scents.",
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-4 py-3 text-xs font-bold tracking-wider text-white uppercase shadow transition-transform hover:scale-[1.02]"
+                >
+                  <MessageCircle size={15} />
+                  <span>WhatsApp SUE</span>
+                </a>
+                <a
+                  href={`tel:+${SUE_PHONE_NUMBER}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-rose-400/40 bg-rose-500/10 hover:bg-rose-500/20 px-4 py-3 text-xs font-bold tracking-wider text-rose-200 uppercase transition-colors"
+                >
+                  <Phone size={14} />
+                  <span>Call 0760370341</span>
+                </a>
+              </div>
+            </div>
+
+            {/* FLOSH - Founder & Perfumer */}
+            <div className="relative overflow-hidden rounded-3xl border border-primary/30 bg-primary/5 backdrop-blur-md p-6 sm:p-7 shadow-xl flex flex-col justify-between transition-all hover:border-primary/60">
+              <div className="absolute top-0 right-0 h-28 w-28 bg-primary/10 rounded-full blur-2xl pointer-events-none" />
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full bg-primary/15 border border-primary/30 px-3.5 py-1 text-xs font-bold text-primary tracking-widest uppercase">
+                  <Sparkles size={13} />
+                  <span>FLOSH</span>
+                </div>
+                <h3 className="font-display mt-3 text-2xl font-bold text-foreground">Flosh</h3>
+                <p className="text-xs font-semibold tracking-wider text-primary uppercase mt-0.5">
+                  Founder & Perfumer
+                </p>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                  Fragrance customization, note layering advice & artisanal blending consultations.
+                </p>
+                <p className="mt-2 font-mono text-sm font-semibold text-primary/90 flex items-center gap-1.5">
+                  <Phone size={13} className="text-primary" />
+                  <span>{WHATSAPP_DISPLAY}</span>
+                </p>
+              </div>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
+                <a
+                  href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                    "Hello Flosh Scents! I'd like to consult on fragrance selection and place an order.",
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-500 px-4 py-3 text-xs font-bold tracking-wider text-white uppercase shadow transition-transform hover:scale-[1.02]"
+                >
+                  <MessageCircle size={15} />
+                  <span>WhatsApp Flosh</span>
+                </a>
+                <a
+                  href={`tel:+${WHATSAPP_NUMBER}`}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 hover:bg-primary/20 px-4 py-3 text-xs font-bold tracking-wider text-primary uppercase transition-colors"
+                >
+                  <Phone size={14} />
+                  <span>Call {WHATSAPP_DISPLAY}</span>
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground font-medium">
+          <div className="mt-10 flex items-center justify-center gap-2 text-xs text-muted-foreground font-medium">
             <MapPin size={15} className="text-primary" />
             <span>Kampala Delivery · Cash on Delivery & Mobile Money accepted</span>
           </div>
@@ -504,6 +589,30 @@ function Footer({ onOpenAdmin, onOpenTrack }: FooterProps) {
         <p className="text-sm text-muted-foreground">
           Luxury Perfumes & Fragrance House · Kampala, Uganda
         </p>
+
+        {/* Direct Contacts in Footer */}
+        <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-6 text-xs text-muted-foreground pt-1">
+          <span className="inline-flex items-center gap-1.5 text-rose-300">
+            <span>🌹</span>
+            <strong className="text-foreground">SUE</strong> ({SUE_ROLE}):{" "}
+            <a
+              href={`tel:+${SUE_PHONE_NUMBER}`}
+              className="hover:underline text-foreground font-mono"
+            >
+              0760 370 341
+            </a>
+          </span>
+          <span className="hidden sm:inline text-border">·</span>
+          <span className="inline-flex items-center gap-1.5 text-primary">
+            <strong className="text-foreground">Flosh</strong> (Founder & Perfumer):{" "}
+            <a
+              href={`tel:+${WHATSAPP_NUMBER}`}
+              className="hover:underline text-foreground font-mono"
+            >
+              {WHATSAPP_DISPLAY}
+            </a>
+          </span>
+        </div>
 
         <div className="flex flex-wrap justify-center gap-6 text-xs font-bold tracking-wider uppercase text-muted-foreground items-center">
           <a href="#home" className="hover:text-primary transition-colors">
